@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- ============================================================
+       AcaNexus : Studivo — Landing Page
+       Author  : [Your Name]
+       Purpose : Academic & Hostel Life Companion web app
+       ============================================================ -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AcaNexus: Studivo — Your all-in-one Academic & Hostel Life Companion for modern students."
+    />
+    <title>AcaNexus : Studivo</title>
+
+    <!-- ── Google Fonts ─────────────────────────────────────────── -->
+    <!-- Playfair Display  →  elegant serif for headings            -->
+    <!-- DM Sans           →  clean, friendly sans for body text    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ── Main stylesheet ──────────────────────────────────────── -->
+    <link
+      rel="stylesheet"
+      href="../static/css/style.css"   // for local testing without Flask
+    />
+  </head>
+
+  <body>
+    <!-- ============================================================
+       NAVIGATION BAR
+       ============================================================ -->
+    <header class="navbar" id="navbar">
+      <div class="nav-container">
+        <!-- Brand logo / wordmark -->
+        <a href="#" class="nav-brand">
+          <span class="brand-icon">◈</span>
+          <span class="brand-name">AcaNexus <em>Studivo</em></span>
+        </a>
+
+        <!-- Desktop navigation links -->
+        <nav class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#" class="btn btn-outline-sm">Sign In</a>
+          <a href="#" class="btn btn-primary-sm">Get Started</a>
+        </nav>
+
+        <!-- Hamburger toggle (mobile) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Mobile drawer -->
+      <nav class="mobile-nav" id="mobileNav">
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#" class="btn btn-outline-sm">Sign In</a>
+        <a href="#" class="btn btn-primary-sm">Get Started</a>
+      </nav>
+    </header>
+
+    <!-- ============================================================
+       HERO SECTION
+       A full-viewport opening with layered background, animated
+       headline, and two call-to-action buttons.
+       ============================================================ -->
+    <section class="hero" id="home">
+      <!-- Decorative background geometry -->
+      <div class="hero-bg-grid" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--left" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--right" aria-hidden="true"></div>
+
+      <div class="container hero-content">
+        <!-- Eyebrow label -->
+        <p class="hero-eyebrow animate-fade-up" style="--delay: 0.1s">
+          <span class="dot"></span> Built for Students · Crafted for Focus
+        </p>
+
+        <!-- Main headline -->
+        <h1 class="hero-title animate-fade-up" style="--delay: 0.25s">
+          AcaNexus <br />
+          <em>Studivo</em>
+        </h1>
+
+        <!-- Tagline -->
+        <p class="hero-tagline animate-fade-up" style="--delay: 0.4s">
+          Your Academic &amp; Hostel Life Companion
+        </p>
+
+        <!-- Supporting sub-copy -->
+        <p class="hero-sub animate-fade-up" style="--delay: 0.55s">
+          Everything a college student needs — lecture notes, hostel meal
+          schedules, attendance tracking, and productivity tools — unified in
+          one elegant platform.
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="hero-cta animate-fade-up" style="--delay: 0.7s">
+          <a href="#features" class="btn btn-gold">Explore Features</a>
+          <a href="#about" class="btn btn-ghost">Learn More ↓</a>
+        </div>
+
+        <!-- Social proof / stats strip -->
+        <div class="hero-stats animate-fade-up" style="--delay: 0.85s">
+          <div class="stat">
+            <span class="stat-num">10K+</span>
+            <span class="stat-label">Students</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat-num">50+</span>
+            <span class="stat-label">Colleges</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat-num">4.9 ★</span>
+            <span class="stat-label">Avg. Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-hint" aria-hidden="true">
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       FEATURES SECTION
+       Three feature cards, each representing a core module.
+       ============================================================ -->
+    <section class="features" id="features">
+      <!-- Section header -->
+      <div class="container section-header">
+        <p class="section-label">Core Modules</p>
+        <h2 class="section-title">
+          Everything You Need,<br /><em>One Place</em>
+        </h2>
+        <p class="section-sub">
+          Three powerful hubs designed around the real rhythm of campus life.
+        </p>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="container features-grid">
+        <!-- ── Card 1 : Academic Hub ─────────────────────────── -->
+        <div class="feature-card" data-index="1">
+          <div class="card-icon-wrap">
+            <div class="card-icon">🎓</div>
+          </div>
+          <h3 class="card-title">Academic Hub</h3>
+          <p class="card-desc">
+            Centralise your entire academic life — timetables, lecture notes,
+            assignment deadlines, attendance records, and grade analytics — all
+            synced and searchable in seconds.
+          </p>
+          <ul class="card-features">
+            <li>Smart attendance tracker</li>
+            <li>Assignment &amp; exam calendar</li>
+            <li>Grade analytics dashboard</li>
+            <li>Study material repository</li>
+          </ul>
+          <a href="#" class="card-link">Explore Academic Hub →</a>
+        </div>
+
+        <!-- ── Card 2 : Hostel Hub ───────────────────────────── -->
+        <div class="feature-card feature-card--highlight" data-index="2">
+          <div class="card-badge">Most Loved</div>
+          <div class="card-icon-wrap">
+            <div class="card-icon">🏠</div>
+          </div>
+          <h3 class="card-title">Hostel Hub</h3>
+          <p class="card-desc">
+            Navigate hostel life effortlessly — check daily meal menus, raise
+            maintenance requests, track outpass approvals, and stay updated on
+            warden notices from one dashboard.
+          </p>
+          <ul class="card-features">
+            <li>Daily mess menu &amp; feedback</li>
+            <li>Outpass &amp; leave requests</li>
+            <li>Maintenance complaint portal</li>
+            <li>Warden notice board</li>
+          </ul>
+          <a href="#" class="card-link">Explore Hostel Hub →</a>
+        </div>
+
+        <!-- ── Card 3 : Productivity Dashboard ──────────────── -->
+        <div class="feature-card" data-index="3">
+          <div class="card-icon-wrap">
+            <div class="card-icon">⚡</div>
+          </div>
+          <h3 class="card-title">Productivity Dashboard</h3>
+          <p class="card-desc">
+            Stay on top of your goals with Pomodoro timers, a Kanban task board,
+            habit streaks, and focus analytics — purpose-built for the
+            distraction-heavy campus environment.
+          </p>
+          <ul class="card-features">
+            <li>Pomodoro &amp; focus timer</li>
+            <li>Kanban task board</li>
+            <li>Habit streak tracker</li>
+            <li>Weekly focus reports</li>
+          </ul>
+          <a href="#" class="card-link">Explore Dashboard →</a>
+        </div>
+      </div>
+      <!-- /features-grid -->
+    </section>
+
+    <!-- ============================================================
+       HOW IT WORKS  (simple visual flow strip)
+       ============================================================ -->
+    <section class="how-it-works">
+      <div class="container section-header">
+        <p class="section-label">Process</p>
+        <h2 class="section-title">
+          Up &amp; Running in<br /><em>Three Steps</em>
+        </h2>
+      </div>
+
+      <div class="container steps-row">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4 class="step-title">Create Your Profile</h4>
+          <p class="step-desc">
+            Sign up with your college email, select your branch, year, and
+            hostel block.
+          </p>
+        </div>
+
+        <div class="step-connector" aria-hidden="true">— — —</div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4 class="step-title">Sync Your Schedule</h4>
+          <p class="step-desc">
+            Import your timetable or build one from scratch. Set deadline
+            reminders and meal preferences.
+          </p>
+        </div>
+
+        <div class="step-connector" aria-hidden="true">— — —</div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4 class="step-title">Focus &amp; Thrive</h4>
+          <p class="step-desc">
+            Use the Productivity Dashboard daily to build habits, track goals,
+            and finish the semester strong.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       ABOUT SECTION
+       ============================================================ -->
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <!-- Left column — text content -->
+        <div class="about-text">
+          <p class="section-label">About</p>
+          <h2 class="section-title">Why We Built<br /><em>AcaNexus</em></h2>
+          <p class="about-body">
+            AcaNexus : Studivo was born out of a frustration shared by thousands
+            of hostel-dwelling engineering students — juggling WhatsApp groups
+            for notes, separate apps for tasks, and a noticeboard for mess
+            menus.
+            <br /><br />
+            We set out to build the single platform that understands the dual
+            identity of a student: a learner striving for academic excellence
+            and a resident navigating the everyday logistics of hostel life.
+          </p>
+
+          <!-- Key values -->
+          <div class="about-values">
+            <div class="value-pill">🎯 Student-First Design</div>
+            <div class="value-pill">🔒 Privacy-Focused</div>
+            <div class="value-pill">📱 Mobile-First</div>
+            <div class="value-pill">⚡ Offline Support</div>
+          </div>
+
+          <a href="#" class="btn btn-gold">Read Full Story</a>
+        </div>
+
+        <!-- Right column — decorative info card -->
+        <div class="about-card-wrap">
+          <div class="about-card">
+            <div class="about-card-header">
+              <span class="card-icon-sm">◈</span>
+              <span>AcaNexus : Studivo</span>
+            </div>
+            <p class="about-card-quote">
+              "The best tool is the one that disappears into your routine —
+              quiet enough to let you focus, smart enough to keep you on track."
+            </p>
+            <div class="about-card-author">
+              <div class="author-avatar">S</div>
+              <div>
+                <strong>The Studivo Team</strong><br />
+                <small>Student developers &amp; designers</small>
+              </div>
+            </div>
+
+            <!-- Mini feature list inside card -->
+            <div class="about-card-list">
+              <div class="acl-item">
+                <span class="acl-dot"></span> Academic Hub
+              </div>
+              <div class="acl-item">
+                <span class="acl-dot"></span> Hostel Hub
+              </div>
+              <div class="acl-item">
+                <span class="acl-dot"></span> Productivity Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /about-grid -->
+    </section>
+
+    <!-- ============================================================
+       CTA BANNER
+       ============================================================ -->
+    <section class="cta-banner" id="contact">
+      <div class="container cta-inner">
+        <h2 class="cta-title">
+          Ready to Upgrade<br /><em>Your Student Life?</em>
+        </h2>
+        <p class="cta-sub">
+          Join thousands of students who've already simplified their campus
+          experience.
+        </p>
+        <div class="cta-actions">
+          <a href="#" class="btn btn-gold btn-lg">Get Started — It's Free</a>
+          <a href="#" class="btn btn-ghost">View Demo ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+    <footer class="footer">
+      <div class="container footer-grid">
+        <!-- Brand column -->
+        <div class="footer-brand-col">
+          <a href="#" class="nav-brand footer-logo">
+            <span class="brand-icon">◈</span>
+            <span class="brand-name">AcaNexus <em>Studivo</em></span>
+          </a>
+          <p class="footer-tagline">
+            Your Academic &amp; Hostel Life Companion
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="GitHub">⌥</a>
+            <a href="#" aria-label="Instagram">◎</a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div class="footer-col">
+          <h5 class="footer-heading">Product</h5>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-col">
+          <h5 class="footer-heading">Resources</h5>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">API Reference</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer-col">
+          <h5 class="footer-heading">Company</h5>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /footer-grid -->
+
+      <!-- Bottom bar -->
+      <div class="footer-bottom">
+        <div class="container footer-bottom-inner">
+          <p>&copy; 2025 AcaNexus : Studivo. All rights reserved.</p>
+          <p>Built with ♥ by students, for students.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============================================================
+       JAVASCRIPT  —  Navbar scroll effect + hamburger toggle
+       ============================================================ -->
+    <script>
+      /* ── Navbar: add .scrolled class once user scrolls 60 px ─── */
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 60);
+      });
+
+      /* ── Hamburger menu toggle for mobile ───────────────────── */
+      const hamburger = document.getElementById("hamburger");
+      const mobileNav = document.getElementById("mobileNav");
+
+      hamburger.addEventListener("click", () => {
+        const open = hamburger.classList.toggle("open");
+        mobileNav.classList.toggle("open", open);
+        hamburger.setAttribute("aria-expanded", open);
+      });
+
+      /* ── Close mobile nav when a link is clicked ────────────── */
+      mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("open");
+          mobileNav.classList.remove("open");
+        });
+      });
+
+      /* ── Scroll-reveal: add .visible when card enters viewport ─ */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target); /* animate once only */
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      /* Observe feature cards, steps, and about sections */
+      document
+        .querySelectorAll(".feature-card, .step, .about-text, .about-card-wrap")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
