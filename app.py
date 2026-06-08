@@ -116,7 +116,6 @@ def edit_note(note_id):
     )
 
     note = cursor.fetchone()
-
     conn.close()
 
     return render_template(
