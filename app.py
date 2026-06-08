@@ -73,6 +73,45 @@ def delete_note(note_id):
 
     return redirect("/notes")
 
+@app.route("/edit_note/<int:note_id>", methods=["GET", "POST"])
+def edit_note(note_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        content = request.form["content"]
+
+        cursor.execute(
+            """
+            UPDATE notes
+            SET title = ?, content = ?
+            WHERE id = ?
+            """,
+            (title, content, note_id)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/notes")
+
+    cursor.execute(
+        "SELECT * FROM notes WHERE id = ?",
+        (note_id,)
+    )
+
+    note = cursor.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "edit_note.html",
+        note=note
+    )
+
 @app.route("/assignments")
 def assignments():
     return render_template("assignments.html")
