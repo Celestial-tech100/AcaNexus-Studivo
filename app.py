@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request
+from flask import Flask, render_template , request , redirect 
 import sqlite3
 
 app = Flask(__name__)
@@ -56,6 +56,22 @@ def notes():
         "notes.html",
         notes=notes
     )
+    
+@app.route("/delete_note/<int:note_id>")
+def delete_note(note_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM notes WHERE id = ?",
+        (note_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/notes")
 
 @app.route("/assignments")
 def assignments():
