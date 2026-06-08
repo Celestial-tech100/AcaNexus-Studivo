@@ -47,7 +47,19 @@ def notes():
 
         conn.commit()
 
-    cursor.execute("SELECT * FROM notes")
+    search = request.args.get("search")
+
+    if search:
+
+        cursor.execute(
+            "SELECT * FROM notes WHERE title LIKE ?",
+            ('%' + search + '%',)
+        )
+
+    else:
+
+        cursor.execute("SELECT * FROM notes")
+
     notes = cursor.fetchall()
 
     conn.close()

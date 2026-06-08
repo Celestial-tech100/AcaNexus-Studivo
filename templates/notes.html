@@ -12,6 +12,21 @@
     <div class="main-content">
       <h1>My Notes</h1>
 
+      <form method="GET">
+        <input
+          type="text"
+          name="search"
+          value="{{ request.args.get('search', '') }}"
+          placeholder="Search notes by title..."
+        />
+
+        <button type="submit">Search</button>
+
+        <a href="/notes">
+          <button type="button">Show All</button>
+        </a>
+      </form>
+
       <form method="POST">
         <input
           type="text"
@@ -44,21 +59,24 @@
 
       {% for note in notes %}
 
-      <div class="card">
+      <div class="note-card">
         <h3>{{ note[1] }}</h3>
 
         <p>{{ note[2] }}</p>
 
-        <a href="/edit_note/{{ note[0] }}">
-          <button>Edit</button>
-        </a>
+        <div class="note-actions">
+          <a href="/edit_note/{{ note[0] }}">
+            <button>Edit</button>
+          </a>
 
-        <a href="/delete_note/{{ note[0] }}">
-          <button>Delete</button>
-        </a>
+          <a
+            href="/delete_note/{{ note[0] }}"
+            onclick="return confirm('Delete this note?');"
+          >
+            <button>Delete</button>
+          </a>
+        </div>
       </div>
-
-      <br />
 
       {% endfor %}
     </div>
