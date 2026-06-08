@@ -2,8 +2,57 @@
 <html>
   <head>
     <title>Notes</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
+
   <body>
-    <h1>Notes Page</h1>
+    <div class="main-content">
+      <h1>My Notes</h1>
+
+      <form method="POST">
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter Note Title"
+          required
+        />
+
+        <br /><br />
+
+        <textarea
+          name="content"
+          rows="5"
+          cols="50"
+          placeholder="Write your note here"
+          required
+        >
+        </textarea>
+
+        <br /><br />
+
+        <button type="submit">Save Note</button>
+      </form>
+
+      <br /><br />
+      <br /><br />
+
+      <hr />
+      <h2>Saved Notes</h2>
+
+      {% for note in notes %}
+
+      <div class="card">
+        <h3>{{ note[1] }}</h3>
+
+        <p>{{ note[2] }}</p>
+      </div>
+
+      <br />
+
+      {% endfor %}
+    </div>
   </body>
 </html>

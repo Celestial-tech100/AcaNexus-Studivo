@@ -1,9 +1,49 @@
 <!doctype html>
 <html>
   <head>
-    <title>Dashboard</title>
+    <title>Dashboard - AcaNexus</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
+
   <body>
-    <h1>Dashboard Page</h1>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2>AcaNexus</h2>
+
+        <ul>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/notes">Notes</a></li>
+          <li><a href="/assignments">Assignments</a></li>
+          <li><a href="/expenses">Expenses</a></li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <h1>Welcome Back, Student 👋</h1>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Total Notes</h3>
+            <p>0</p>
+          </div>
+
+          <div class="card">
+            <h3>Pending Assignments</h3>
+            <p>0</p>
+          </div>
+
+          <div class="card">
+            <h3>Monthly Expenses</h3>
+            <p>₹0</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
