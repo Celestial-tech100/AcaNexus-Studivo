@@ -1,9 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Assignments</title>
-</head>
-<body>
-    <h1>Assignments Page</h1>
-</body>
-</html>
+{% extends "base.html" %} {% block content %}
+
+<h1>Assignments</h1>
+
+<form method="POST">
+  <input type="text" name="title" placeholder="Assignment Title" required />
+
+  <br /><br />
+
+  <input type="text" name="subject" placeholder="Subject" required />
+
+  <br /><br />
+
+  <input type="date" name="due_date" required />
+
+  <br /><br />
+
+  <button type="submit">Add Assignment</button>
+</form>
+
+<hr />
+
+<h2>My Assignments</h2>
+
+{% for assignment in assignments %}
+
+<div class="note-card">
+  <h3>{{ assignment[1] }}</h3>
+
+  <p><strong>Subject:</strong> {{ assignment[2] }}</p>
+
+  <p><strong>Due:</strong> {{ assignment[3] }}</p>
+
+  <p><strong>Status:</strong> {{ assignment[4] }}</p>
+</div>
+
+{% endfor %} {% endblock %}

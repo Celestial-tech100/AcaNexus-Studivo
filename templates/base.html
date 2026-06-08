@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AcaNexus</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+
+      <div class="sidebar">
+        <h2>AcaNexus</h2>
+
+        <ul>
+          <li>
+            <a href="/dashboard">Dashboard</a>
+          </li>
+
+          <li>
+            <a href="/notes">Notes</a>
+          </li>
+
+          <li>
+            <a href="/assignments">Assignments</a>
+          </li>
+
+          <li>
+            <a href="/expenses">Expenses</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Page Content -->
+
+      <div class="main-content">{% block content %} {% endblock %}</div>
+    </div>
+  </body>
+</html>

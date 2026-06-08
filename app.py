@@ -15,6 +15,15 @@ def create_database():
         content TEXT NOT NULL
     )
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS assignments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        subject TEXT NOT NULL,
+        due_date TEXT NOT NULL,
+        status TEXT DEFAULT 'Pending'
+    )
+    """)
 
     conn.commit()
     conn.close()
@@ -123,9 +132,39 @@ def edit_note(note_id):
         note=note
     )
 
-@app.route("/assignments")
+@app.route("/assignments", methods=["GET", "POST"])
 def assignments():
-    return render_template("assignments.html")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        subject = request.form["subject"]
+        due_date = request.form["due_date"]
+
+        cursor.execute(
+            """
+            INSERT INTO assignments
+            (title, subject, due_date)
+            VALUES (?, ?, ?)
+            """,
+            (title, subject, due_date)
+        )
+
+        conn.commit()
+
+    cursor.execute("SELECT * FROM assignments")
+
+    assignments = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "assignments.html",
+        assignments=assignments
+    )
 
 @app.route("/expenses")
 def expenses():

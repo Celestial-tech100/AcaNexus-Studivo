@@ -1,84 +1,63 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Notes</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-  </head>
+{% extends "base.html" %} {% block content %}
 
-  <body>
-    <div class="main-content">
-      <h1>My Notes</h1>
+<h1>My Notes</h1>
 
-      <form method="GET">
-        <input
-          type="text"
-          name="search"
-          value="{{ request.args.get('search', '') }}"
-          placeholder="Search notes by title..."
-        />
+<form method="GET">
+  <input
+    type="text"
+    name="search"
+    value="{{ request.args.get('search', '') }}"
+    placeholder="Search notes by title..."
+  />
 
-        <button type="submit">Search</button>
+  <button type="submit">Search</button>
 
-        <a href="/notes">
-          <button type="button">Show All</button>
-        </a>
-      </form>
+  <a href="/notes">
+    <button type="button">Show All</button>
+  </a>
+</form>
 
-      <form method="POST">
-        <input
-          type="text"
-          name="title"
-          placeholder="Enter Note Title"
-          required
-        />
+<form method="POST">
+  <input type="text" name="title" placeholder="Enter Note Title" required />
 
-        <br /><br />
+  <br /><br />
 
-        <textarea
-          name="content"
-          rows="5"
-          cols="50"
-          placeholder="Write your note here"
-          required
-        >
-        </textarea>
+  <textarea
+    name="content"
+    rows="5"
+    cols="50"
+    placeholder="Write your note here"
+    required
+  ></textarea>
 
-        <br /><br />
+  <br /><br />
 
-        <button type="submit">Save Note</button>
-      </form>
+  <button type="submit">Save Note</button>
+</form>
 
-      <br /><br />
-      <br /><br />
+<hr />
 
-      <hr />
-      <h2>Saved Notes</h2>
+<h2>Saved Notes</h2>
 
-      {% for note in notes %}
+{% for note in notes %}
 
-      <div class="note-card">
-        <h3>{{ note[1] }}</h3>
+<div class="note-card">
+  <h3>{{ note[1] }}</h3>
 
-        <p>{{ note[2] }}</p>
+  <p>{{ note[2] }}</p>
 
-        <div class="note-actions">
-          <a href="/edit_note/{{ note[0] }}">
-            <button>Edit</button>
-          </a>
+  <div class="note-actions">
+    <a href="/edit_note/{{ note[0] }}">
+      <button>Edit</button>
+    </a>
 
-          <a
-            href="/delete_note/{{ note[0] }}"
-            onclick="return confirm('Delete this note?');"
-          >
-            <button>Delete</button>
-          </a>
-        </div>
-      </div>
+    <a
+      href="/delete_note/{{ note[0] }}"
+      onclick="return confirm('Delete this note?');"
+    >
+      <button>Delete</button>
+    </a>
+  </div>
+</div>
 
-      {% endfor %}
-    </div>
-  </body>
-</html>
+{% endfor %} {% endblock %}
