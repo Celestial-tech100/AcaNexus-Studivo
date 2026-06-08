@@ -36,7 +36,31 @@ def home():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM notes")
+    total_notes = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM assignments WHERE status='Pending'"
+    )
+    pending_assignments = cursor.fetchone()[0]
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM assignments WHERE status='Completed'"
+    )
+    completed_assignments = cursor.fetchone()[0]
+
+    conn.close()
+
+    return render_template(
+        "dashboard.html",
+        total_notes=total_notes,
+        pending_assignments=pending_assignments,
+        completed_assignments=completed_assignments
+    )
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
@@ -165,6 +189,44 @@ def assignments():
         "assignments.html",
         assignments=assignments
     )
+
+@app.route("/delete_assignment/<int:assignment_id>")
+def delete_assignment(assignment_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM assignments WHERE id = ?",
+        (assignment_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/assignments")
+
+@app.route("/complete_assignment/<int:assignment_id>")
+def complete_assignment(assignment_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE assignments
+        SET status = 'Completed'
+        WHERE id = ?
+        """,
+        (assignment_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/assignments")
+
+
 
 @app.route("/expenses")
 def expenses():

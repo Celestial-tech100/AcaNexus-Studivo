@@ -1360,3 +1360,10 @@ button{
 .note-actions button{
     margin-right:10px;
 }
+.status-completed{
+    font-weight:bold;
+}
+
+.status-pending{
+    font-weight:bold;
+}

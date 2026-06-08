@@ -31,7 +31,32 @@
 
   <p><strong>Due:</strong> {{ assignment[3] }}</p>
 
-  <p><strong>Status:</strong> {{ assignment[4] }}</p>
+  {% if assignment[4] == "Completed" %}
+
+  <p class="status-completed">🟢 Completed</p>
+
+  {% else %}
+
+  <p class="status-pending">🟡 Pending</p>
+
+  {% endif %}
+
+  <div class="note-actions">
+    {% if assignment[4] == "Pending" %}
+
+    <a href="/complete_assignment/{{ assignment[0] }}">
+      <button>Complete</button>
+    </a>
+
+    {% endif %}
+
+    <a
+      href="/delete_assignment/{{ assignment[0] }}"
+      onclick="return confirm('Delete this assignment?');"
+    >
+      <button>Delete</button>
+    </a>
+  </div>
 </div>
 
 {% endfor %} {% endblock %}
