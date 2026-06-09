@@ -1,310 +1,117 @@
-/* (cards, buttons, forms, notes, etc.)  */
+/* =====================================================
+   COMPONENTS.CSS — Reusable UI building blocks
+   ===================================================== */
 
-/* ================================================================
-   AcaNexus : Studivo — COMPONENTS.CSS
-   Buttons, Cards, Forms, UI Elements
-   ================================================================ */
+/* ===============================
+   BUTTON SYSTEM
+   =============================== */
 
-
-/* =========================
-   1. CARDS (GLOBAL)
-   ========================= */
-
-.card{
-    background: var(--clr-surface);
-    border: 1px solid var(--clr-border);
-
-    padding: 20px;
-    border-radius: var(--radius-md);
-
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--tr-base), box-shadow var(--tr-base);
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s2);
+  padding: 10px 16px;
+  border-radius: var(--r2);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
 }
 
-.card:hover{
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
+/* Primary */
+.btn-primary {
+  background: var(--primary);
+  color: #0d0f14;
+}
+.btn-primary:hover {
+  background: #e1b864;
+  transform: translateY(-2px);
 }
 
-
-/* =========================
-   2. BUTTONS (GLOBAL)
-   ========================= */
-
-button{
-    padding: 10px 16px;
-    border-radius: var(--radius-md);
-
-    background: var(--clr-primary);
-    color: white;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    transition: all var(--tr-base);
+/* Outline */
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
-button:hover{
-    opacity: 0.9;
-    transform: translateY(-1px);
+/* Small */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
 }
 
-/* Secondary button */
-.btn-secondary{
-    background: var(--clr-surface-2);
-    color: var(--clr-text);
-    border: 1px solid var(--clr-border);
+/* ===============================
+   FORM SYSTEM
+   =============================== */
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r2);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: 0.2s ease;
+  margin-bottom: var(--s3);
 }
 
-/* Danger button */
-.btn-danger{
-    background: var(--clr-danger);
-    color: white;
+input:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(212,168,83,0.15);
 }
 
+/* ===============================
+   CARDS (GLOBAL DEFAULT)
+   =============================== */
 
-/* =========================
-   3. FORMS (INPUTS / TEXTAREA / SELECT)
-   ========================= */
-
-input,
-textarea,
-select{
-    width: 100%;
-    padding: 10px 12px;
-
-    border-radius: var(--radius-md);
-    border: 1px solid var(--clr-border);
-
-    background: var(--clr-surface-2);
-    color: var(--clr-text);
-
-    font-size: 14px;
-
-    outline: none;
-    transition: border var(--tr-base), background var(--tr-base);
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  transition: all 0.3s ease;
 }
 
-input:focus,
-textarea:focus,
-select:focus{
-    border-color: var(--clr-primary);
-    background: #0f1b33;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(212,168,83,0.25);
 }
 
+/* ===============================
+   STATUS PILLS
+   =============================== */
 
-/* =========================
-   4. SEARCH + FORM LAYOUT
-   ========================= */
-
-.search-bar{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 15px;
+.pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.note-form{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.pill-success {
+  background: rgba(0, 255, 120, 0.1);
+  color: #3cff9a;
 }
 
-
-/* =========================
-   5. NOTE COMPONENTS
-   ========================= */
-
-.note-card{
-    background: var(--clr-card);
-    border: 1px solid var(--clr-border);
-
-    padding: 18px;
-    border-radius: var(--radius-lg);
-
-    transition: all var(--tr-base);
+.pill-warning {
+  background: rgba(255, 200, 0, 0.1);
+  color: #ffd36b;
 }
 
-.note-card:hover{
-    transform: translateY(-4px);
-    border-color: var(--clr-primary);
-}
-
-/* Note title */
-.note-card h3{
-    font-family: var(--ff-display);
-    font-size: 18px;
-    color: var(--clr-text);
-    margin-bottom: 8px;
-}
-
-/* Note text */
-.note-card p{
-    color: var(--clr-muted);
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-
-/* Note actions */
-.note-actions{
-    margin-top: 12px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.note-actions a{
-    font-size: 13px;
-    color: var(--clr-primary);
-    font-weight: 500;
-}
-
-.note-actions .danger{
-    color: var(--clr-danger);
-}
-
-
-/* =========================
-   6. ANALYTICS CARDS (EXPENSES / DASHBOARD)
-   ========================= */
-
-.analytics-card{
-    background: var(--clr-surface);
-    border: 1px solid var(--clr-border);
-
-    padding: 20px;
-    border-radius: var(--radius-lg);
-}
-
-.analytics-card h3{
-    margin-bottom: 12px;
-    color: var(--clr-text);
-}
-
-.analytics-card ul{
-    list-style: none;
-}
-
-.analytics-card li{
-    padding: 8px 0;
-    border-bottom: 1px solid var(--clr-border);
-    color: var(--clr-muted);
-}
-
-
-/* =========================
-   7. CATEGORY GRID (EXPENSE BREAKDOWN)
-   ========================= */
-
-.category-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.category-card{
-    background: var(--clr-card);
-    border: 1px solid var(--clr-border);
-
-    padding: 16px;
-    border-radius: var(--radius-lg);
-
-    text-align: center;
-
-    transition: all var(--tr-base);
-}
-
-.category-card:hover{
-    transform: translateY(-4px);
-    border-color: var(--clr-primary);
-}
-
-.category-card h4{
-    font-size: 14px;
-    color: var(--clr-muted);
-}
-
-.category-card p{
-    margin-top: 8px;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--clr-text);
-}
-
-
-/* =========================
-   8. STATUS BADGES (ASSIGNMENTS)
-   ========================= */
-
-.status-completed{
-    color: var(--clr-accent);
-    font-weight: 600;
-}
-
-.status-pending{
-    color: var(--clr-warning);
-    font-weight: 600;
-}
-
-.status-overdue{
-    color: var(--clr-danger);
-    font-weight: 600;
-}
-
-/* =========================
-   NOTES UI POLISH
-   ========================= */
-
-.notes-control-card{
-    margin-bottom: 16px;
-    background: var(--clr-surface);
-    border: 1px solid var(--clr-border);
-}
-
-/* smoother inputs in notes */
-.notes-control-card input,
-.notes-control-card textarea{
-    background: var(--clr-surface-2);
-    border: 1px solid var(--clr-border);
-    transition: all var(--tr-base);
-}
-
-.notes-control-card input:focus,
-.notes-control-card textarea:focus{
-    border-color: var(--clr-primary);
-    box-shadow: 0 0 0 3px rgba(79,140,255,0.15);
-}
-
-/* improved note card hover */
-.note-card{
-    position: relative;
-    overflow: hidden;
-}
-
-.note-card::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--clr-primary);
-    opacity: 0;
-    transition: opacity var(--tr-base);
-}
-
-.note-card:hover::before{
-    opacity: 1;
-}
-
-/* subtle title improvement */
-.note-card h3{
-    letter-spacing: 0.2px;
-}
-
-/* better action spacing */
-.note-actions{
-    padding-top: 8px;
-    border-top: 1px solid var(--clr-border);
+.pill-danger {
+  background: rgba(255, 80, 80, 0.1);
+  color: #ff6b6b;
 }

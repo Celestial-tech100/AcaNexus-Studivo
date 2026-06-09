@@ -1,5 +1,14 @@
 {% extends "base.html" %} {% block content %}
 
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/notes.css') }}"
+/>
+
 <div class="page-header">
   <h1>My Notes</h1>
   <p>Organize your thoughts, ideas, and study material</p>

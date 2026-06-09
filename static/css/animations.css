@@ -1,0 +1,56 @@
+/* =====================================================
+   ANIMATIONS.CSS — AcaNexus Motion System
+   ===================================================== */
+
+/* FADE UP */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FADE IN */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* SLIDE LEFT */
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* GLOBAL ANIMATION UTILITIES */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.slide-left {
+  animation: slideLeft 0.5s ease forwards;
+}
+
+/* HOVER LIFT (GLOBAL) */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}

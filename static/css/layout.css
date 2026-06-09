@@ -1,164 +1,80 @@
-/* (sidebar, container, main layout) */
+/* =====================================================
+   LAYOUT.CSS — App Structure System
+   ===================================================== */
 
-/* ================================================================
-   AcaNexus : Studivo — LAYOUT.CSS
-   Sidebar + App Structure + Page Layout
-   ================================================================ */
-
-
-/* =========================
-   1. MAIN APP WRAPPER
-   ========================= */
-
-.dashboard-container{
-    display: flex;
-    min-height: 100vh;
-    background: var(--clr-bg);
+/* MAIN WRAPPER */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
 }
 
-
-/* =========================
-   2. SIDEBAR
-   ========================= */
-
-.sidebar{
-    width: 260px;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-
-    background: var(--clr-surface);
-    border-right: 1px solid var(--clr-border);
-
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    z-index: 100;
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
 }
 
-/* Sidebar Title */
-.sidebar h2{
-    font-family: var(--ff-display);
-    font-size: 22px;
-    color: var(--clr-text);
-    letter-spacing: 0.5px;
+/* SIDEBAR LINKS */
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
 }
 
-/* Sidebar Menu */
-.sidebar ul{
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
+.sidebar a {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: var(--r2);
+  transition: 0.2s ease;
 }
 
-/* Sidebar Links */
-.sidebar a{
-    display: block;
-    padding: 10px 12px;
-    border-radius: var(--radius-md);
-
-    color: var(--clr-muted);
-    font-size: 15px;
-
-    transition: all var(--tr-base);
+.sidebar a:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 
-/* Hover effect */
-.sidebar a:hover{
-    background: var(--clr-surface-2);
-    color: var(--clr-text);
-    transform: translateX(4px);
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  padding: var(--s8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+  overflow-x: hidden;
 }
 
-/* Active link (you can manually add class later) */
-.sidebar a.active{
-    background: var(--clr-card);
-    color: var(--clr-primary);
-    border-left: 3px solid var(--clr-primary);
+/* PAGE HEADER AREA */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s6);
 }
 
-
-/* =========================
-   3. MAIN CONTENT AREA
-   ========================= */
-
-.main-content{
-    flex: 1;
-
-    margin-left: 260px;   /* matches sidebar width */
-    padding: 30px;
-
-    min-height: 100vh;
-    background: var(--clr-bg);
+/* GRID SYSTEM */
+.grid {
+  display: grid;
+  gap: var(--s6);
 }
 
-
-/* =========================
-   4. PAGE HEADER
-   (for Notes / Assignments / Expenses titles)
-   ========================= */
-
-.page-header{
-    margin-bottom: 20px;
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.page-header h1{
-    font-family: var(--ff-display);
-    font-size: 28px;
-    color: var(--clr-text);
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.page-header p{
-    color: var(--clr-muted);
-    font-size: 14px;
-    margin-top: 4px;
-}
-
-
-/* =========================
-   5. RESPONSIVE DESIGN
-   ========================= */
-
-/* Tablet */
-@media (max-width: 1024px){
-    .sidebar{
-        width: 220px;
-    }
-
-    .main-content{
-        margin-left: 220px;
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px){
-
-    .sidebar{
-        position: relative;
-        width: 100%;
-        height: auto;
-
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .sidebar ul{
-        flex-direction: row;
-        gap: 12px;
-    }
-
-    .main-content{
-        margin-left: 0;
-        padding: 20px;
-    }
-
-    .sidebar h2{
-        font-size: 18px;
-    }
+@media (max-width: 900px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
 }

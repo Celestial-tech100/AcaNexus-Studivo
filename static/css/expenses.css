@@ -1,0 +1,41 @@
+/* =====================================================
+   EXPENSES.CSS — Clean Finance UI
+   ===================================================== */
+
+.expenses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s6);
+  padding: var(--s6);
+}
+
+/* EXPENSE CARD */
+.expense-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+/* AMOUNT */
+.expense-amount {
+  font-size: 20px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* LABELS */
+.expense-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ACTION AREA */
+.expense-actions {
+  margin-top: var(--s3);
+  display: flex;
+  gap: var(--s3);
+}

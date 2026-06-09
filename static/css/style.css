@@ -11,6 +11,10 @@
 @import "components.css";
 @import "pages.css";
 @import "landing.css";
+@import "assignments.css";
+@import "notes.css";
+@import "animations.css";
+@import "expenses.css";
 
 html {
   -webkit-font-smoothing: antialiased;
@@ -68,4 +72,217 @@ section {
 }
 html {
   scroll-padding-top: var(--nav-height);
+}
+/* ================================
+   DASHBOARD — REAL FIX
+   ================================ */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--clr-bg);
+}
+
+/* Sidebar breathing space */
+.sidebar {
+  width: 240px;
+  padding: 28px 20px;
+}
+
+/* MAIN FIX (THIS WAS MISSING) */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-x: hidden;
+}
+
+/* DASHBOARD SECTION WRAPPER */
+.dashboard-section {
+  margin-bottom: 32px;
+}
+
+/* GRID FIX */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+/* CARD FIX */
+.dashboard-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 16px;
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  min-height: 140px;
+
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212,168,83,0.35);
+  box-shadow: var(--shadow-md);
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* global animation utility */
+.fade-in {
+  animation: fadeUp 0.4s ease forwards;
+}
+
+/* smoother hover system globally */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+}
+/* =====================================================
+   GLOBAL DESIGN SYSTEM (AcaNexus UI CORE)
+   ===================================================== */
+
+:root {
+  /* 🎨 BACKGROUND SYSTEM */
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface-2: #1c2030;
+
+  /* ✨ ACCENT */
+  --primary: #d4a853;
+  --primary-soft: rgba(212,168,83,0.15);
+
+  /* 🧊 TEXT */
+  --text: #e8e9ee;
+  --muted: #8a8fa8;
+
+  /* 📦 BORDERS */
+  --border: rgba(255,255,255,0.08);
+
+  /* 📐 SPACING SYSTEM */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --s8: 32px;
+  --s10: 40px;
+  --s12: 48px;
+
+  /* 🔲 RADIUS */
+  --r1: 6px;
+  --r2: 12px;
+  --r3: 18px;
+  --r4: 24px;
+
+  /* ⚡ SHADOWS */
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.4);
+
+  /* 🎞 TRANSITIONS */
+  --t-fast: 0.2s ease;
+  --t-smooth: 0.35s ease;
+}
+
+/* =====================================================
+   GLOBAL ANIMATIONS SYSTEM
+   ===================================================== */
+
+/* 🌟 Fade Up (main entry animation) */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌟 Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 🌟 Slide In Left */
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 🌟 Smooth hover lift utility */
+.hover-lift {
+  transition: transform var(--t-smooth), box-shadow var(--t-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+/* =====================================================
+   GLOBAL UI CONSISTENCY RULES
+   ===================================================== */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ALL CARDS UNIFIED */
+.dashboard-card,
+.assignment-card,
+.note-card,
+.expense-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  padding: var(--s6);
+  animation: fadeUp 0.4s ease;
+}
+
+/* ALL GRIDS CONSISTENT */
+.dashboard-grid,
+.assignments-grid,
+.notes-grid,
+.expenses-grid {
+  display: grid;
+  gap: var(--s6);
+}
+
+/* ALL HOVER EFFECTS UNIFIED */
+.dashboard-card:hover,
+.assignment-card:hover,
+.note-card:hover,
+.expense-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(212,168,83,0.25);
 }
