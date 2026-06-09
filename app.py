@@ -25,10 +25,19 @@ def create_database():
         status TEXT DEFAULT 'Pending'
     )
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS expenses (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        amount REAL NOT NULL,
+        category TEXT NOT NULL,
+        expense_date TEXT NOT NULL
+    )
+    """)
 
     conn.commit()
     conn.close()
-    print("Database and notes table created!")
+    print("Database and tables created!")
     
     
 @app.route("/")
@@ -66,6 +75,15 @@ def dashboard():
     )
 
     overdue_assignments = cursor.fetchone()[0]
+    
+    cursor.execute(
+    "SELECT SUM(amount) FROM expenses"
+    )
+
+    total_expenses = cursor.fetchone()[0]
+
+    if total_expenses is None:
+        total_expenses = 0
 
     conn.close()
 
@@ -74,7 +92,8 @@ def dashboard():
     total_notes=total_notes,
     pending_assignments=pending_assignments,
     completed_assignments=completed_assignments,
-    overdue_assignments=overdue_assignments
+    overdue_assignments=overdue_assignments,
+    total_expenses=total_expenses
 )
 
 @app.route("/notes", methods=["GET", "POST"])
@@ -245,10 +264,67 @@ def complete_assignment(assignment_id):
     return redirect("/assignments")
 
 
-
-@app.route("/expenses")
+@app.route("/expenses", methods=["GET", "POST"])
 def expenses():
-    return render_template("expenses.html")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        amount = request.form["amount"]
+        category = request.form["category"]
+        expense_date = request.form["expense_date"]
+
+        cursor.execute(
+            """
+            INSERT INTO expenses
+            (title, amount, category, expense_date)
+            VALUES (?, ?, ?, ?)
+            """,
+            (title, amount, category, expense_date)
+        )
+
+        conn.commit()
+
+    cursor.execute(
+        "SELECT * FROM expenses ORDER BY expense_date DESC"
+    )
+
+    expenses = cursor.fetchall()
+    cursor.execute(
+    "SELECT SUM(amount) FROM expenses"
+    )
+
+    total_expense = cursor.fetchone()[0]
+
+    if total_expense is None:
+        total_expense = 0
+
+    conn.close()
+
+    return render_template(
+        "expenses.html",
+        expenses=expenses,
+        total_expense=total_expense
+    )
+
+@app.route("/delete_expense/<int:expense_id>")
+def delete_expense(expense_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM expenses WHERE id = ?",
+        (expense_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/expenses")
 
 if __name__ == "__main__":
     create_database()

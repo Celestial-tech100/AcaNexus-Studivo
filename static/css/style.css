@@ -1024,6 +1024,7 @@ em { font-style: italic; }
 
 .cards{
     display:flex;
+    flex-wrap:wrap;
     gap:20px;
     margin-top:30px;
 }
@@ -1032,7 +1033,8 @@ em { font-style: italic; }
     background:white;
     padding:25px;
     border-radius:10px;
-    width:250px;
+
+    flex:1 1 250px;
 
     box-shadow:0 3px 8px rgba(0,0,0,0.1);
 }
