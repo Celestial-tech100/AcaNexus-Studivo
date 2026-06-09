@@ -35,6 +35,10 @@
 
   <p class="status-completed">🟢 Completed</p>
 
+  {% elif assignment[3] < today %}
+
+  <p class="status-overdue">🔴 Overdue</p>
+
   {% else %}
 
   <p class="status-pending">🟡 Pending</p>

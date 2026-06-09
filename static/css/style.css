@@ -1367,3 +1367,6 @@ button{
 .status-pending{
     font-weight:bold;
 }
+.status-overdue{
+    font-weight:bold;
+}

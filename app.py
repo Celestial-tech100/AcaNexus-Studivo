@@ -1,5 +1,6 @@
 from flask import Flask, render_template , request , redirect 
 import sqlite3
+from datetime import date
 
 app = Flask(__name__)
 def create_database():
@@ -52,15 +53,29 @@ def dashboard():
         "SELECT COUNT(*) FROM assignments WHERE status='Completed'"
     )
     completed_assignments = cursor.fetchone()[0]
+    today = date.today().isoformat()
+
+    cursor.execute(
+        """
+        SELECT COUNT(*)
+        FROM assignments
+        WHERE status='Pending'
+        AND due_date < ?
+        """,
+        (today,)
+    )
+
+    overdue_assignments = cursor.fetchone()[0]
 
     conn.close()
 
     return render_template(
-        "dashboard.html",
-        total_notes=total_notes,
-        pending_assignments=pending_assignments,
-        completed_assignments=completed_assignments
-    )
+    "dashboard.html",
+    total_notes=total_notes,
+    pending_assignments=pending_assignments,
+    completed_assignments=completed_assignments,
+    overdue_assignments=overdue_assignments
+)
 
 @app.route("/notes", methods=["GET", "POST"])
 def notes():
@@ -183,11 +198,14 @@ def assignments():
 
     assignments = cursor.fetchall()
 
+    today = date.today().isoformat()
+
     conn.close()
 
     return render_template(
         "assignments.html",
-        assignments=assignments
+        assignments=assignments,
+        today=today
     )
 
 @app.route("/delete_assignment/<int:assignment_id>")
