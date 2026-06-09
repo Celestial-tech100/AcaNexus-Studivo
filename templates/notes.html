@@ -1,63 +1,74 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>My Notes</h1>
-
-<form method="GET">
-  <input
-    type="text"
-    name="search"
-    value="{{ request.args.get('search', '') }}"
-    placeholder="Search notes by title..."
-  />
-
-  <button type="submit">Search</button>
-
-  <a href="/notes">
-    <button type="button">Show All</button>
-  </a>
-</form>
-
-<form method="POST">
-  <input type="text" name="title" placeholder="Enter Note Title" required />
-
-  <br /><br />
-
-  <textarea
-    name="content"
-    rows="5"
-    cols="50"
-    placeholder="Write your note here"
-    required
-  ></textarea>
-
-  <br /><br />
-
-  <button type="submit">Save Note</button>
-</form>
-
-<hr />
-
-<h2>Saved Notes</h2>
-
-{% for note in notes %}
-
-<div class="note-card">
-  <h3>{{ note[1] }}</h3>
-
-  <p>{{ note[2] }}</p>
-
-  <div class="note-actions">
-    <a href="/edit_note/{{ note[0] }}">
-      <button>Edit</button>
-    </a>
-
-    <a
-      href="/delete_note/{{ note[0] }}"
-      onclick="return confirm('Delete this note?');"
-    >
-      <button>Delete</button>
-    </a>
-  </div>
+<div class="page-header">
+  <h1>My Notes</h1>
+  <p>Organize your thoughts, ideas, and study material</p>
 </div>
 
-{% endfor %} {% endblock %}
+<!-- SEARCH CARD -->
+<div class="card notes-control-card">
+  <form method="GET" class="search-bar">
+    <input
+      type="text"
+      name="search"
+      value="{{ request.args.get('search', '') }}"
+      placeholder="Search notes..."
+    />
+
+    <button type="submit">Search</button>
+
+    <a href="/notes">
+      <button type="button" class="btn-secondary">Reset</button>
+    </a>
+  </form>
+</div>
+
+<!-- ADD NOTE CARD -->
+<div class="card notes-control-card">
+  <form method="POST" class="note-form">
+    <input type="text" name="title" placeholder="Note title..." required />
+
+    <textarea
+      name="content"
+      rows="4"
+      placeholder="Write your thoughts..."
+      required
+    ></textarea>
+
+    <button type="submit">Save Note</button>
+  </form>
+</div>
+
+<!-- NOTES GRID -->
+<div class="notes-grid">
+  {% if notes|length == 0 %}
+
+  <div class="notes-empty">
+    <h3>No notes yet</h3>
+    <p>Create your first note to get started</p>
+  </div>
+
+  {% endif %} {% for note in notes %}
+
+  <div class="note-card">
+    <h3>{{ note[1] }}</h3>
+
+    <p>{{ note[2] }}</p>
+
+    <div class="note-actions">
+      <a href="/edit_note/{{ note[0] }}">Edit</a>
+
+      <a
+        href="/delete_note/{{ note[0] }}"
+        onclick="return confirm('Delete this note?');"
+        class="danger"
+      >
+        Delete
+      </a>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock %}

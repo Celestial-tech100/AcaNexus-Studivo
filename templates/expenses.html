@@ -8,6 +8,31 @@
   <p>₹{{ total_expense }}</p>
 </div>
 
+<div class="analytics-card">
+  <h3>Category Breakdown</h3>
+
+  <div class="category-grid">
+    {% for category, total in category_totals %}
+    <div class="category-card">
+      <h4>{{ category }}</h4>
+      <p>₹{{ "%.2f"|format(total) }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<h2>Category Breakdown</h2>
+
+{% for category in category_totals %}
+
+<div class="note-card">
+  <h3>{{ category[0] }}</h3>
+
+  <p>₹{{ category[1] }}</p>
+</div>
+
+{% endfor %}
+
 <br />
 
 <form method="POST">
@@ -25,8 +50,21 @@
 
   <br /><br />
 
-  <input type="text" name="category" placeholder="Category" required />
+  <select name="category" required>
+    <option value="">Select Category</option>
 
+    <option value="Food">Food</option>
+
+    <option value="Books">Books</option>
+
+    <option value="Travel">Travel</option>
+
+    <option value="Utilities">Utilities</option>
+
+    <option value="Entertainment">Entertainment</option>
+
+    <option value="Other">Other</option>
+  </select>
   <br /><br />
 
   <input type="date" name="expense_date" required />

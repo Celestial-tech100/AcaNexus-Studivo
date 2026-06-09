@@ -1,66 +1,96 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>Assignments</h1>
+<section class="assignments-page">
+  <div class="container">
+    <div class="assignments-topbar">
+      <div class="assignments-stats">
+        <div class="stat-box">
+          <h3>{{ assignments|length }}</h3>
+          <p>Total</p>
+        </div>
 
-<form method="POST">
-  <input type="text" name="title" placeholder="Assignment Title" required />
+        <div class="stat-box">
+          <h3>
+            {{ assignments | selectattr(4, "equalto", "Pending") | list | length
+            }}
+          </h3>
+          <p>Pending</p>
+        </div>
 
-  <br /><br />
+        <div class="stat-box">
+          <h3>
+            {{ assignments | selectattr(4, "equalto", "Completed") | list |
+            length }}
+          </h3>
+          <p>Completed</p>
+        </div>
+      </div>
+      <div>
+        <h2>Your Assignments</h2>
+        <p class="section-sub">Track deadlines, stay ahead of submissions</p>
+      </div>
+    </div>
 
-  <input type="text" name="subject" placeholder="Subject" required />
+    <div class="assignment-form-card">
+      <form method="POST" class="assignment-form">
+        <input
+          type="text"
+          name="title"
+          placeholder="Assignment Title"
+          required
+        />
+        <input type="text" name="subject" placeholder="Subject" required />
+        <input type="date" name="due_date" required />
+        <button type="submit" class="btn btn-gold">+ Add Assignment</button>
+      </form>
+    </div>
 
-  <br /><br />
+    <hr class="divider" />
 
-  <input type="date" name="due_date" required />
+    <div class="assignments-grid">
+      {% if assignments|length == 0 %}
+      <div class="assignments-empty">
+        <h3>No Assignments Yet</h3>
+        <p>Add your first assignment and stay ahead 🚀</p>
+      </div>
+      {% else %} {% for assignment in assignments %}
+      <div class="assignment-card">
+        <h3 class="assignment-title">{{ assignment[1] }}</h3>
 
-  <br /><br />
+        <p class="assignment-meta">
+          <strong>Subject:</strong> {{ assignment[2] }}
+        </p>
 
-  <button type="submit">Add Assignment</button>
-</form>
+        <p class="assignment-meta"><strong>Due:</strong> {{ assignment[3] }}</p>
 
-<hr />
+        {% if assignment[4] == "Completed" %}
+        <span class="status-pill done">Completed</span>
 
-<h2>My Assignments</h2>
+        {% elif assignment[3] < today %}
+        <span class="status-pill overdue">Overdue</span>
 
-{% for assignment in assignments %}
+        {% else %}
+        <span class="status-pill pending">Pending</span>
+        {% endif %}
 
-<div class="note-card">
-  <h3>{{ assignment[1] }}</h3>
+        <div class="assignment-actions">
+          {% if assignment[4] == "Pending" %}
+          <a href="/complete_assignment/{{ assignment[0] }}">
+            <button class="btn btn-outline-sm">Complete</button>
+          </a>
+          {% endif %}
 
-  <p><strong>Subject:</strong> {{ assignment[2] }}</p>
-
-  <p><strong>Due:</strong> {{ assignment[3] }}</p>
-
-  {% if assignment[4] == "Completed" %}
-
-  <p class="status-completed">🟢 Completed</p>
-
-  {% elif assignment[3] < today %}
-
-  <p class="status-overdue">🔴 Overdue</p>
-
-  {% else %}
-
-  <p class="status-pending">🟡 Pending</p>
-
-  {% endif %}
-
-  <div class="note-actions">
-    {% if assignment[4] == "Pending" %}
-
-    <a href="/complete_assignment/{{ assignment[0] }}">
-      <button>Complete</button>
-    </a>
-
-    {% endif %}
-
-    <a
-      href="/delete_assignment/{{ assignment[0] }}"
-      onclick="return confirm('Delete this assignment?');"
-    >
-      <button>Delete</button>
-    </a>
+          <a
+            href="/delete_assignment/{{ assignment[0] }}"
+            onclick="return confirm('Delete this assignment?');"
+          >
+            <button class="btn btn-primary-sm">Delete</button>
+          </a>
+        </div>
+      </div>
+      {% endfor %} {% endif %}
+    </div>
   </div>
-</div>
+</section>
 
-{% endfor %} {% endblock %}
+{% endblock %}

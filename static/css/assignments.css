@@ -1,0 +1,297 @@
+/* =========================================================
+   ASSIGNMENTS UI — POLISHED STUDIVO VERSION
+   ========================================================= */
+
+.assignments-page {
+  padding: 50px 0;
+  color: var(--clr-text);
+}
+
+/* ================= HEADER ================= */
+.assignments-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+.assignments-topbar h2 {
+  font-family: var(--ff-display);
+  font-size: 32px;
+  letter-spacing: -0.5px;
+}
+
+.assignments-topbar .section-sub {
+  color: var(--clr-text-muted);
+  font-size: 14px;
+}
+
+/* ================= FORM CARD ================= */
+.assignment-form-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* form layout */
+.assignment-form {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+/* inputs */
+.assignment-form input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.assignment-form input:focus {
+  border-color: var(--clr-gold);
+  box-shadow: 0 0 0 3px rgba(212,168,83,0.15);
+}
+
+/* ================= DIVIDER ================= */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--clr-border),
+    transparent
+  );
+  margin: 30px 0;
+}
+
+/* ================= GRID ================= */
+.assignments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+/* ================= CARD ================= */
+.assignment-card {
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.assignment-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(212,168,83,0.08),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.assignment-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212,168,83,0.25);
+  box-shadow: var(--shadow-md);
+}
+
+.assignment-card:hover::before {
+  opacity: 1;
+}
+
+/* ================= TEXT ================= */
+.assignment-title {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.assignment-meta {
+  font-size: 14px;
+  color: var(--clr-text-muted);
+}
+
+/* ================= STATUS ================= */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+  letter-spacing: 0.3px;
+}
+
+.status-pill.done {
+  background: rgba(46, 229, 157, 0.12);
+  color: #2ee59d;
+}
+
+.status-pill.pending {
+  background: rgba(255, 204, 102, 0.12);
+  color: #ffcc66;
+}
+
+.status-pill.overdue {
+  background: rgba(255, 107, 107, 0.12);
+  color: #ff6b6b;
+}
+
+/* ================= ACTIONS ================= */
+.assignment-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* smooth button spacing fix */
+.assignment-actions a {
+  text-decoration: none;
+}
+
+/* =========================================================
+   ASSIGNMENTS — SMART UX + ANIMATIONS UPGRADE
+   ========================================================= */
+
+/* ================= ENTRY ANIMATION ================= */
+.assignment-card {
+  animation: fadeUp 0.5s ease forwards;
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* stagger effect */
+.assignment-card:nth-child(1) { animation-delay: 0.05s; }
+.assignment-card:nth-child(2) { animation-delay: 0.1s; }
+.assignment-card:nth-child(3) { animation-delay: 0.15s; }
+.assignment-card:nth-child(4) { animation-delay: 0.2s; }
+.assignment-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* ================= HOVER LIFT ENHANCEMENT ================= */
+.assignment-card:hover {
+  transform: translateY(-8px) scale(1.01);
+}
+
+/* ================= OVERDUE PULSE ================= */
+.status-pill.overdue {
+  animation: pulseRed 1.8s infinite;
+}
+
+@keyframes pulseRed {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.35);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+  }
+}
+
+/* ================= COMPLETED STRIKE STYLE ================= */
+.assignment-card:has(.status-pill.done) {
+  opacity: 0.75;
+}
+
+.assignment-card:has(.status-pill.done) .assignment-title {
+  text-decoration: line-through;
+  color: var(--clr-text-muted);
+}
+
+/* ================= URGENT (optional class hook) ================= */
+/* if due date is within 2 days (you can add class later in backend) */
+.assignment-card.urgent {
+  border-color: rgba(255, 204, 102, 0.4);
+  box-shadow: 0 0 25px rgba(255, 204, 102, 0.08);
+}
+
+/* ================= BUTTON HOVER MICRO INTERACTION ================= */
+.assignment-actions button {
+  transition: 0.2s ease;
+}
+
+.assignment-actions button:hover {
+  transform: translateY(-2px);
+}
+
+/* ================= EMPTY STATE ================= */
+.assignments-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--clr-text-muted);
+  border: 1px dashed var(--clr-border);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+}
+
+.assignments-empty h3 {
+  color: var(--clr-text);
+  margin-bottom: 8px;
+  font-family: var(--ff-display);
+}
+/* ================= STATS BAR ================= */
+
+.assignments-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0 30px;
+}
+
+.stat-box {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,168,83,0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-box h3 {
+  font-size: 22px;
+  font-family: var(--ff-display);
+  color: var(--clr-gold);
+  margin-bottom: 4px;
+}
+
+.stat-box p {
+  font-size: 12px;
+  color: var(--clr-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

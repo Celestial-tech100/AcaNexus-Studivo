@@ -3,6 +3,7 @@ import sqlite3
 from datetime import date
 
 app = Flask(__name__)
+
 def create_database():
 
     conn = sqlite3.connect("database/acanexus.db")
@@ -81,6 +82,15 @@ def dashboard():
     )
 
     total_expenses = cursor.fetchone()[0]
+    cursor.execute(
+    """
+    SELECT category, SUM(amount)
+    FROM expenses
+    GROUP BY category
+    """
+)
+
+    category_totals = cursor.fetchall()
 
     if total_expenses is None:
         total_expenses = 0
@@ -301,13 +311,21 @@ def expenses():
 
     if total_expense is None:
         total_expense = 0
+        
+    cursor.execute("""
+    SELECT category, SUM(amount)
+    FROM expenses
+    GROUP BY category
+    """)
+    category_totals = cursor.fetchall()
 
     conn.close()
 
     return render_template(
         "expenses.html",
         expenses=expenses,
-        total_expense=total_expense
+        total_expense=total_expense,
+        category_totals=category_totals
     )
 
 @app.route("/delete_expense/<int:expense_id>")
