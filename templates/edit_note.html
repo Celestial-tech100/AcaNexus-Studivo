@@ -1,60 +1,18 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
 
-{% block content %}
+<div class="page-header">
+  <h1>Edit Note</h1>
+  <p>Update your note information</p>
+</div>
 
-<h1>Edit Note</h1>
+<div class="notes-control-card">
+  <form method="POST" class="note-form">
+    <input type="text" name="title" value="{{ note[1] }}" required />
 
-<form method="POST">
+    <textarea name="content" rows="8" required>{{ note[2] }}</textarea>
 
-    <input
-        type="text"
-        name="title"
-        value="{{ note[1] }}"
-        required>
-
-    <br><br>
-
-    <textarea
-        name="content"
-        rows="5"
-        cols="50"
-        required>{{ note[2] }}</textarea>
-
-    <br><br>
-
-    <button type="submit">
-        Update Note
-    </button>
-
-</form>
+    <button type="submit" class="btn btn-gold">Update Note</button>
+  </form>
+</div>
 
 {% endblock %}
-  <head>
-    <title>Edit Note</title>
-
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-  </head>
-
-  <body>
-    <div class="main-content">
-      <h1>Edit Note</h1>
-
-      <form method="POST">
-        <input type="text" name="title" value="{{ note[1] }}" required />
-
-        <br /><br />
-
-        <textarea name="content" rows="5" cols="50" required>
-{{ note[2] }}</textarea
-        >
-
-        <br /><br />
-
-        <button type="submit">Update Note</button>
-      </form>
-    </div>
-  </body>
-</html>

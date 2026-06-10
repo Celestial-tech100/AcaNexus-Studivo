@@ -34,20 +34,6 @@
   </div>
 </div>
 
-<h2>Category Breakdown</h2>
-
-{% for category in category_totals %}
-
-<div class="note-card">
-  <h3>{{ category[0] }}</h3>
-
-  <p>₹{{ category[1] }}</p>
-</div>
-
-{% endfor %}
-
-<br />
-
 <form method="POST">
   <input type="text" name="title" placeholder="Expense Title" required />
 
@@ -84,11 +70,23 @@
 
   <br /><br />
 
-  <button type="submit">Add Expense</button>
+  <button type="submit" class="btn btn-gold">+ Add Expense</button>
 </form>
 <br /><br />
 <hr />
+<h2>Category Breakdown</h2>
 
+{% for category in category_totals %}
+
+<div class="note-card">
+  <h3>{{ category[0] }}</h3>
+
+  <p>₹{{ category[1] }}</p>
+</div>
+
+{% endfor %}
+
+<br />
 <h2>My Expenses</h2>
 
 {% for expense in expenses %}

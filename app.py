@@ -74,13 +74,10 @@ def dashboard():
         """,
         (today,)
     )
-
     overdue_assignments = cursor.fetchone()[0]
-    
     cursor.execute(
     "SELECT SUM(amount) FROM expenses"
     )
-
     total_expenses = cursor.fetchone()[0]
     cursor.execute(
     """
@@ -89,12 +86,9 @@ def dashboard():
     GROUP BY category
     """
 )
-
     category_totals = cursor.fetchall()
-
     if total_expenses is None:
         total_expenses = 0
-
     conn.close()
 
     return render_template(
@@ -103,7 +97,8 @@ def dashboard():
     pending_assignments=pending_assignments,
     completed_assignments=completed_assignments,
     overdue_assignments=overdue_assignments,
-    total_expenses=total_expenses
+    total_expenses=total_expenses,
+    category_totals=category_totals
 )
 
 @app.route("/notes", methods=["GET", "POST"])
