@@ -1,27 +1,10 @@
--- Future Enhancements:
--- Add user_id foreign keys to notes, assignments, and expenses
--- to support multi-user data isolation.
-
--- =====================================================
--- AcaNexus : Studivo Database Schema
--- Author: Divya H Kishore
--- Database: SQLite
--- =====================================================
-
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS notes (
+CREATE TABLE notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     content TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS assignments (
+CREATE TABLE assignments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     subject TEXT NOT NULL,
@@ -29,10 +12,17 @@ CREATE TABLE IF NOT EXISTS assignments (
     status TEXT DEFAULT 'Pending'
 );
 
-CREATE TABLE IF NOT EXISTS expenses (
+CREATE TABLE expenses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     amount REAL NOT NULL,
     category TEXT NOT NULL,
     expense_date TEXT NOT NULL
+);
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
 );
