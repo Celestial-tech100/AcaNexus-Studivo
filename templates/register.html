@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Register - AcaNexus</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="auth-logo">
+          <h1>AcaNexus</h1>
+          <p>Create your student workspace</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+          <input type="text" name="username" placeholder="Username" required />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+
+          <button type="submit" class="auth-btn">Create Account</button>
+        </form>
+
+        <p class="auth-footer">
+          Already have an account?
+
+          <a href="/login"> Login </a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

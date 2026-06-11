@@ -1,8 +1,14 @@
-from flask import Flask, render_template , request , redirect 
+from flask import ( Flask, render_template , request , redirect ,session, url_for )
+from werkzeug.security import (
+    generate_password_hash,
+    check_password_hash
+)
 import sqlite3
 from datetime import date
 
 app = Flask(__name__)
+
+app.secret_key = "acanexus_secret_key"
 
 def create_database():
 
@@ -35,6 +41,14 @@ def create_database():
         expense_date TEXT NOT NULL
     )
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL
+    )
+    """)
 
     conn.commit()
     conn.close()
@@ -47,6 +61,9 @@ def home():
 
 @app.route("/dashboard")
 def dashboard():
+    
+    if "user_id" not in session:
+        return redirect("/login")
 
     conn = sqlite3.connect("database/acanexus.db")
     cursor = conn.cursor()
@@ -63,6 +80,10 @@ def dashboard():
         "SELECT COUNT(*) FROM assignments WHERE status='Completed'"
     )
     completed_assignments = cursor.fetchone()[0]
+    total_assignments = (
+    pending_assignments
+    + completed_assignments
+)
     today = date.today().isoformat()
 
     cursor.execute(
@@ -85,10 +106,31 @@ def dashboard():
     FROM expenses
     GROUP BY category
     """
-)
+    )
     category_totals = cursor.fetchall()
+    cursor.execute(
+        "SELECT COUNT(*) FROM expenses"
+    )
+
+    expense_count = cursor.fetchone()[0]
+    
     if total_expenses is None:
         total_expenses = 0
+    productivity_score = min(
+    (
+        total_notes * 2
+        + completed_assignments * 5
+        + expense_count
+    ),
+    100
+    )
+    if total_assignments > 0:
+        completion_percentage = int(
+            (completed_assignments / total_assignments) * 100
+        )
+    else:
+        completion_percentage = 0
+
     conn.close()
 
     return render_template(
@@ -96,9 +138,12 @@ def dashboard():
     total_notes=total_notes,
     pending_assignments=pending_assignments,
     completed_assignments=completed_assignments,
+    total_assignments=total_assignments,
     overdue_assignments=overdue_assignments,
     total_expenses=total_expenses,
-    category_totals=category_totals
+    category_totals=category_totals,
+    productivity_score=productivity_score,
+    completion_percentage=completion_percentage
 )
 
 @app.route("/notes", methods=["GET", "POST"])
@@ -338,6 +383,108 @@ def delete_expense(expense_id):
     conn.close()
 
     return redirect("/expenses")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        hashed_password = generate_password_hash(password)
+
+        conn = sqlite3.connect("database/acanexus.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        INSERT INTO users(username, email, password)
+        VALUES (?, ?, ?)
+        """,
+        (username, email, hashed_password))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/login")
+
+    return render_template("register.html")
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        hashed_password = generate_password_hash(password)
+
+        conn = sqlite3.connect("database/acanexus.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        INSERT INTO users(username, email, password)
+        VALUES (?, ?, ?)
+        """,
+        (username, email, hashed_password))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/login")
+
+    return render_template("register.html")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM expenses WHERE id = ?",
+        (expense_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/expenses")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("database/acanexus.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users WHERE email=?",
+            (email,)
+        )
+
+        user = cursor.fetchone()
+
+        conn.close()
+
+        if user and check_password_hash(user[3], password):
+
+            session["user_id"] = user[0]
+            session["username"] = user[1]
+
+            return redirect("/dashboard")
+
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/")
+
 
 if __name__ == "__main__":
     create_database()

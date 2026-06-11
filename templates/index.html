@@ -25,7 +25,10 @@
     />
 
     <!-- ── Main stylesheet ──────────────────────────────────────── -->
-    <link rel="stylesheet" href="../static/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
 
   <body>
@@ -45,8 +48,20 @@
           <a href="#features">Features</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
-          <a href="#" class="btn btn-outline-sm">Sign In</a>
-          <a href="#" class="btn btn-primary-sm">Get Started</a>
+
+          {% if session.get('user_id') %}
+
+          <a href="/dashboard" class="btn btn-outline-sm"> Dashboard </a>
+
+          <a href="/logout" class="btn btn-primary-sm"> Logout </a>
+
+          {% else %}
+
+          <a href="/login" class="btn btn-outline-sm"> Sign In </a>
+
+          <a href="/register" class="btn btn-primary-sm"> Get Started </a>
+
+          {% endif %}
         </nav>
 
         <!-- Hamburger toggle (mobile) -->
@@ -62,8 +77,20 @@
         <a href="#features">Features</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <a href="#" class="btn btn-outline-sm">Sign In</a>
-        <a href="#" class="btn btn-primary-sm">Get Started</a>
+
+        {% if session.get('user_id') %}
+
+        <a href="/dashboard" class="btn btn-outline-sm"> Dashboard </a>
+
+        <a href="/logout" class="btn btn-primary-sm"> Logout </a>
+
+        {% else %}
+
+        <a href="/login" class="btn btn-outline-sm"> Sign In </a>
+
+        <a href="/register" class="btn btn-primary-sm"> Get Started </a>
+
+        {% endif %}
       </nav>
     </header>
 
@@ -105,8 +132,19 @@
 
         <!-- CTA buttons -->
         <div class="hero-cta animate-fade-up" style="--delay: 0.7s">
-          <a href="#features" class="btn btn-gold">Explore Features</a>
-          <a href="#about" class="btn btn-ghost">Learn More ↓</a>
+          {% if session.get('user_id') %}
+
+          <a href="/dashboard" class="btn btn-gold"> Go To Dashboard → </a>
+
+          <a href="/logout" class="btn btn-ghost"> Logout </a>
+
+          {% else %}
+
+          <a href="/register" class="btn btn-gold"> Get Started Free → </a>
+
+          <a href="/login" class="btn btn-ghost"> Sign In </a>
+
+          {% endif %}
         </div>
 
         <!-- Social proof / stats strip -->
