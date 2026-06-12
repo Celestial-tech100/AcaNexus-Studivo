@@ -214,13 +214,15 @@ AcaNexus-Studivo/
 │   ├── css/
 │   │   ├── style.css
 │   │   ├── base.css
+|   |   ├── auth.css
+|   |   ├── dashboard.css
 │   │   ├── layout.css
+|   |   ├── pages.css
 │   │   ├── components.css
 │   │   ├── landing.css
 │   │   ├── assignments.css
 │   │   ├── notes.css
 │   │   ├── expenses.css
-│   │   └── animations.css
 │   │
 │   ├── js/
 │   │   └── script.js
@@ -233,7 +235,9 @@ AcaNexus-Studivo/
 │   ├── notes.html
 │   ├── edit_note.html
 │   ├── assignments.html
-│   └── expenses.html
+│   ├── expenses.html
+│   ├── login.html
+│   └── register.html
 │
 └── screenshots/
     ├── Homepage.png
