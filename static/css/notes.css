@@ -188,3 +188,14 @@
 
     color: #ff6b6b;
 }
+.auth-form textarea {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+
+    padding: 14px 16px;
+    border-radius: 12px;
+
+    resize: vertical;
+    min-height: 180px;
+}

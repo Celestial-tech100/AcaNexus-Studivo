@@ -66,12 +66,20 @@
     border-radius: var(--radius-lg);
 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
 
     transition: all var(--tr-base);
-}
 
+    position: relative;
+    z-index: 1;
+}
+.assignment-actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
 .assignment-card:hover{
     transform: translateY(-3px);
     border-color: var(--clr-primary);
@@ -92,8 +100,38 @@
     font-size: 13px;
     color: var(--clr-muted);
 }
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
 
+.complete-btn {
+  background: #4caf50;
+  color: white;
+}
 
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.action-btn:hover {
+  transform: scale(1.05);
+}
+.assignment-card {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.assignment-card * {
+    pointer-events: auto !important;
+}
 /* =========================
    4. EXPENSES PAGE LAYOUT
    ========================= */

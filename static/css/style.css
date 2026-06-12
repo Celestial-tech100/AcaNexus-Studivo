@@ -11,7 +11,6 @@
 @import "components.css";
 @import "pages.css";
 @import "landing.css";
-@import "assignments.css";
 @import "notes.css";
 @import "dashboard.css";
 @import "expenses.css";
@@ -76,28 +75,6 @@ html {
 /* ================================
    DASHBOARD — REAL FIX
    ================================ */
-
-.dashboard-container {
-  display: flex;
-  min-height: 100vh;
-  background: var(--clr-bg);
-}
-
-/* Sidebar breathing space */
-.sidebar {
-  width: 240px;
-  padding: 28px 20px;
-}
-
-/* MAIN FIX (THIS WAS MISSING) */
-.main-content {
-  flex: 1;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  overflow-x: hidden;
-}
 
 /* DASHBOARD SECTION WRAPPER */
 .dashboard-section {
@@ -347,4 +324,26 @@ body {
 
 .auth-footer a{
     color:var(--primary);
+}
+
+
+.overlay,
+.modal,
+.backdrop,
+.sidebar-overlay,
+.menu-overlay {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+html, body {
+  pointer-events: auto !important;
+}
+
+body * {
+  pointer-events: auto !important;
 }

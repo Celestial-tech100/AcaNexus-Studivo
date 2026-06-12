@@ -1,50 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll(".assignment-card");
 
-  // ===============================
-  // 1. ENTRY ANIMATION (smooth load)
-  // ===============================
+  console.log("AcaNexus loaded");
+
+  const cards = document.querySelectorAll(".assignment-card");
+  const filters = document.querySelectorAll(".filter");
+
+  // animation
   cards.forEach((card, i) => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(20px)";
+    card.style.opacity = 0;
+    card.style.transform = "translateY(15px)";
 
     setTimeout(() => {
-      card.style.transition = "all 0.5s ease";
-      card.style.opacity = "1";
+      card.style.transition = "0.4s ease";
+      card.style.opacity = 1;
       card.style.transform = "translateY(0)";
-    }, i * 80);
+    }, i * 60);
   });
 
-  // ===============================
-  // 2. BUTTON CLICK FEEDBACK
-  // ===============================
-  document.querySelectorAll(".assignment-actions button").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      btn.style.transform = "scale(0.95)";
-      setTimeout(() => {
-        btn.style.transform = "scale(1)";
-      }, 150);
-    });
-  });
-
-  // ===============================
-  // 3. OVERDUE HIGHLIGHT PULSE
-  // ===============================
-  document.querySelectorAll(".status-pill.overdue").forEach(el => {
-    setInterval(() => {
-      el.style.boxShadow = "0 0 10px rgba(255, 107, 107, 0.4)";
-      setTimeout(() => {
-        el.style.boxShadow = "none";
-      }, 600);
-    }, 1500);
-  });
-
-  // ===============================
-  // 4. FILTER SYSTEM (VISUAL ONLY)
-  // ===============================
-  const filters = document.querySelectorAll(".filter");
-  const assignmentCards = document.querySelectorAll(".assignment-card");
-
+  // filter
   filters.forEach(filter => {
     filter.addEventListener("click", () => {
 
@@ -53,22 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const type = filter.textContent.toLowerCase();
 
-      assignmentCards.forEach(card => {
-        const status = card.querySelector(".status-pill")?.textContent.toLowerCase();
+      document.querySelectorAll(".assignment-card").forEach(card => {
+        const status = card.dataset.status;
 
-        if (type === "all") {
-          card.style.display = "flex";
-        }
-        else if (type === "done" && status.includes("completed")) {
-          card.style.display = "flex";
-        }
-        else if (type === "pending" && status.includes("pending")) {
-          card.style.display = "flex";
-        }
-        else {
-          card.style.display = "none";
-        }
+        if (type === "all") card.style.display = "flex";
+        else if (type === "done") card.style.display = status === "completed" ? "flex" : "none";
+        else if (type === "pending") card.style.display = status === "pending" ? "flex" : "none";
       });
+
     });
   });
 

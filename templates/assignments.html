@@ -2,6 +2,7 @@
 
 <section class="assignments-page">
   <div class="container">
+    <!-- TOP BAR -->
     <div class="assignments-topbar">
       <div class="assignments-stats">
         <div class="stat-box">
@@ -25,14 +26,16 @@
           <p>Completed</p>
         </div>
       </div>
+
       <div>
         <h2>Your Assignments</h2>
         <p class="section-sub">Track deadlines, stay ahead of submissions</p>
       </div>
     </div>
 
+    <!-- FORM -->
     <div class="assignment-form-card">
-      <form method="POST" class="assignment-form">
+      <form method="POST" action="/assignments" class="assignment-form">
         <input
           type="text"
           name="title"
@@ -41,21 +44,30 @@
         />
         <input type="text" name="subject" placeholder="Subject" required />
         <input type="date" name="due_date" required />
+
         <button type="submit" class="btn btn-gold">+ Add Assignment</button>
       </form>
     </div>
 
     <hr class="divider" />
 
+    <!-- GRID -->
     <div class="assignments-grid">
       {% if assignments|length == 0 %}
+
       <div class="assignments-empty">
         <h3>No Assignments Yet</h3>
         <p>Add your first assignment and stay ahead 🚀</p>
       </div>
+
       {% else %} {% for assignment in assignments %}
-      <div class="assignment-card">
+
+      <div
+        class="assignment-card"
+        data-status="{% if assignment[4] == 'Completed' %}completed{% elif assignment[3] < today %}overdue{% else %}pending{% endif %}"
+      >
         <h3 class="assignment-title">{{ assignment[1] }}</h3>
+        <p>ID = {{ assignment[0] }}</p>
 
         <p class="assignment-meta">
           <strong>Subject:</strong> {{ assignment[2] }}
@@ -75,19 +87,24 @@
 
         <div class="assignment-actions">
           {% if assignment[4] == "Pending" %}
-          <a href="/complete_assignment/{{ assignment[0] }}">
-            <button class="btn btn-outline-sm">Complete</button>
+          <a
+            class="action-btn complete-btn"
+            href="/complete_assignment/{{ assignment[0] }}"
+          >
+            Complete
           </a>
           {% endif %}
 
           <a
+            class="action-btn delete-btn"
             href="/delete_assignment/{{ assignment[0] }}"
             onclick="return confirm('Delete this assignment?');"
           >
-            <button class="btn btn-primary-sm">Delete</button>
+            Delete
           </a>
         </div>
       </div>
+
       {% endfor %} {% endif %}
     </div>
   </div>
