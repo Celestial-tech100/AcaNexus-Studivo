@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for
+
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 from datetime import date
@@ -350,6 +351,23 @@ def expenses():
         category_totals=category_totals
     )
 
+# ================= DELETE EXPENSE =================
+
+@app.route("/delete_expense/<int:expense_id>")
+def delete_expense(expense_id):
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM expenses
+        WHERE id=? AND user_id=?
+    """, (expense_id, session.get("user_id")))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("expenses"))
 
 # ================= AUTH =================
 @app.route("/register", methods=["GET", "POST"])

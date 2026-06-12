@@ -74,11 +74,10 @@
 </form>
 <br /><br />
 <hr />
-<h2>Category Breakdown</h2>
 
 {% for category in category_totals %}
 
-<div class="note-card">
+<div class="expense-card">
   <h3>{{ category[0] }}</h3>
 
   <p>₹{{ category[1] }}</p>
@@ -88,26 +87,28 @@
 
 <br />
 <h2>My Expenses</h2>
+<div class="expenses-grid">
+  {% for expense in expenses %}
 
-{% for expense in expenses %}
+  <div class="expense-card">
+    <h3>{{ expense[2] }}</h3>
 
-<div class="note-card">
-  <h3>{{ expense[1] }}</h3>
+    <p><strong>₹{{ expense[3] }}</strong></p>
 
-  <p><strong>₹{{ expense[2] }}</strong></p>
+    <p>{{ expense[4] }}</p>
 
-  <p>{{ expense[3] }}</p>
+    <p>{{ expense[5] }}</p>
 
-  <p>{{ expense[4] }}</p>
-
-  <div class="note-actions">
-    <a
-      href="/delete_expense/{{ expense[0] }}"
-      onclick="return confirm('Delete this expense?');"
-    >
-      <button>Delete</button>
-    </a>
+    <div class="expense-actions">
+      <a
+        class="delete-btn"
+        href="/delete_expense/{{ expense[0] }}"
+        onclick="return confirm('Delete this expense?');"
+      >
+        Delete
+      </a>
+    </div>
   </div>
-</div>
 
-{% endfor %} {% endblock %}
+  {% endfor %} {% endblock %}
+</div>
