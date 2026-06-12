@@ -5,6 +5,56 @@
 <div class="success-banner">Profile saved successfully ✓</div>
 {% endif %}
 
+<div class="profile-wrapper">
+  <div class="profile-card">
+    <h2>👤 My Profile</h2>
+
+    <div class="profile-row">
+      <span class="label">Full Name</span>
+      <span class="value">{{ profile[2] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">University</span>
+      <span class="value">{{ profile[3] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Course</span>
+      <span class="value">{{ profile[4] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Branch</span>
+      <span class="value">{{ profile[5] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Year</span>
+      <span class="value">{{ profile[6] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Semester</span>
+      <span class="value">{{ profile[7] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">Session</span>
+      <span class="value">{{ profile[8] if profile else '' }}</span>
+    </div>
+
+    <div class="profile-bio">
+      <span class="label">Bio</span>
+      <p>{{ profile[9] if profile else '' }}</p>
+    </div>
+
+    <button type="button" class="edit-toggle-btn" onclick="showEdit()">
+      Edit Profile
+    </button>
+  </div>
+</div>
+
 <form method="POST">
   <input
     type="text"
@@ -60,20 +110,21 @@
 
   <button type="submit" class="profile-save-btn">Save Profile</button>
 
+  <div id="editSection" style="display:none;">
+
   <button type="button" class="profile-edit-btn" onclick="enableEdit()">
     Edit Profile
   </button>
 </form>
+</div>
 
 <script>
-  function enableEdit() {
-    document.querySelectorAll("input, textarea").forEach((el) => {
-      el.removeAttribute("readonly");
-    });
+  function showEdit() {
+    document.getElementById("editSection").style.display = "block";
+  }
 
-    document.querySelector(".profile-save-btn").style.display = "inline-block";
-
-    document.querySelector(".profile-edit-btn").style.display = "none";
+  function hideEdit() {
+    document.getElementById("editSection").style.display = "none";
   }
 </script>
 

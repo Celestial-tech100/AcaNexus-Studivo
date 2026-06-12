@@ -360,3 +360,49 @@
 
     cursor: pointer;
 }
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile-card {
+    width: 420px;
+    background: #111827;
+    color: #e5e7eb;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    border: 1px solid #1f2937;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 5px;
+}
+
+.label {
+    color: #9ca3af;
+}
+
+.value {
+    color: #f9fafb;
+}
+
+.profile-bio {
+    margin-top: 10px;
+}
+
+.edit-toggle-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
