@@ -67,7 +67,6 @@
         data-status="{% if assignment[4] == 'Completed' %}completed{% elif assignment[3] < today %}overdue{% else %}pending{% endif %}"
       >
         <h3 class="assignment-title">{{ assignment[1] }}</h3>
-        <p>ID = {{ assignment[0] }}</p>
 
         <p class="assignment-meta">
           <strong>Subject:</strong> {{ assignment[2] }}
