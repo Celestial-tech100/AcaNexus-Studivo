@@ -1,0 +1,80 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>My Profile</h1>
+{% if saved %}
+<div class="success-banner">Profile saved successfully ✓</div>
+{% endif %}
+
+<form method="POST">
+  <input
+    type="text"
+    name="full_name"
+    placeholder="Full Name"
+    value="{{ profile[2] if profile else '' }}"
+  />
+
+  <input
+    type="text"
+    name="university"
+    placeholder="University"
+    value="{{ profile[3] if profile else '' }}"
+  />
+
+  <input
+    type="text"
+    name="course"
+    placeholder="Course"
+    value="{{ profile[4] if profile else '' }}"
+  />
+
+  <input
+    type="text"
+    name="branch"
+    placeholder="Branch"
+    value="{{ profile[5] if profile else '' }}"
+  />
+
+  <input
+    type="text"
+    name="year"
+    placeholder="Year"
+    value="{{ profile[6] if profile else '' }}"
+  />
+
+  <input
+    type="text"
+    name="semester"
+    placeholder="Semester"
+    value="{{ profile[7] if profile else '' }}"
+  />
+  <input
+    type="text"
+    name="session"
+    placeholder="Session"
+    value="{{ profile[8] if profile else '' }}"
+  />
+
+  <textarea name="bio" placeholder="About Me">
+{{ profile[9] if profile else '' }}</textarea
+  >
+
+  <button type="submit" class="profile-save-btn">Save Profile</button>
+
+  <button type="button" class="profile-edit-btn" onclick="enableEdit()">
+    Edit Profile
+  </button>
+</form>
+
+<script>
+  function enableEdit() {
+    document.querySelectorAll("input, textarea").forEach((el) => {
+      el.removeAttribute("readonly");
+    });
+
+    document.querySelector(".profile-save-btn").style.display = "inline-block";
+
+    document.querySelector(".profile-edit-btn").style.display = "none";
+  }
+</script>
+
+{% endblock %}

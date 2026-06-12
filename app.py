@@ -52,6 +52,20 @@ def create_database():
         expense_date TEXT
     )
     """)
+    
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE,
+    full_name TEXT,
+    university TEXT,
+    course TEXT,
+    branch TEXT,
+    year TEXT,
+    semester TEXT,
+    bio TEXT
+)
+""")
 
     conn.commit()
     conn.close()
@@ -62,6 +76,63 @@ def create_database():
 def home():
     return render_template("index.html")
 
+# ================= PROFILE  =================
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    user_id = session["user_id"]
+    saved = False
+
+    if request.method == "POST":
+        full_name = request.form["full_name"]
+        university = request.form["university"]
+        course = request.form["course"]
+        branch = request.form["branch"]
+        year = request.form["year"]
+        semester = request.form["semester"]
+        session_value = request.form["session"]
+        bio = request.form["bio"]
+
+        cursor.execute("""
+        UPDATE profiles
+        SET full_name = ?,
+            university = ?,
+            course = ?,
+            branch = ?,
+            year = ?,
+            semester = ?,
+            session = ?,
+            bio = ?
+        WHERE user_id = ?
+        """, (
+            full_name,
+            university,
+            course,
+            branch,
+            year,
+            semester,
+            session_value,
+            bio,
+            user_id
+        ))
+
+        conn.commit()
+        saved = True
+
+    cursor.execute("""
+        SELECT *
+        FROM profiles
+        WHERE user_id=?
+    """, (user_id,))
+
+    profile = cursor.fetchone()
+
+    conn.close()
+
+    return render_template("profile.html", profile=profile, saved=saved)
 
 # ================= DASHBOARD =================
 @app.route("/dashboard")

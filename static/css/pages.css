@@ -305,3 +305,58 @@
 .features-grid{
     all: unset;
 }
+
+/* =========================
+   9. PROFILE PAGE FIXES
+     (success banner)
+   ========================= */
+
+.success-banner{
+    background: rgba(76,175,80,.15);
+    color: #7CFF8A;
+
+    border: 1px solid rgba(76,175,80,.3);
+
+    padding: 14px 18px;
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+}
+.profile-save-btn{
+    background: linear-gradient(
+        135deg,
+        #d4a853,
+        #f4c56d
+    );
+
+    color: #111;
+
+    border: none;
+    border-radius: 14px;
+
+    padding: 14px 24px;
+
+    font-weight: 700;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.profile-save-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(212,168,83,.25);
+}
+.profile-edit-btn{
+    background: transparent;
+    color: var(--primary);
+
+    border: 1px solid var(--primary);
+
+    border-radius: 14px;
+
+    padding: 14px 24px;
+
+    cursor: pointer;
+}

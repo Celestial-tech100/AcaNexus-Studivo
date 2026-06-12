@@ -26,3 +26,17 @@ CREATE TABLE users (
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
+
+CREATE TABLE profiles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    full_name TEXT,
+    university TEXT,
+    course TEXT,
+    branch TEXT,
+    year TEXT,
+    semester TEXT,
+    session TEXT,
+    bio TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
