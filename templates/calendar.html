@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="page-header">
+  <h1>📅 Calendar & Planner</h1>
+  <p>Track assignments, study sessions, exams, and important dates.</p>
+</div>
+
+<div class="calendar-page">
+  <!-- Toolbar -->
+  <div class="calendar-toolbar">
+    <button class="btn">← Previous</button>
+
+    <h2>June 2026</h2>
+
+    <button class="btn">Next →</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="calendar-content">
+    <!-- Calendar Grid -->
+    <div class="calendar-main">
+      <div class="calendar-grid">
+        <div class="calendar-day-name">Sun</div>
+        <div class="calendar-day-name">Mon</div>
+        <div class="calendar-day-name">Tue</div>
+        <div class="calendar-day-name">Wed</div>
+        <div class="calendar-day-name">Thu</div>
+        <div class="calendar-day-name">Fri</div>
+        <div class="calendar-day-name">Sat</div>
+
+        {% for i in range(1,31) %}
+        <div class="calendar-day">
+          <span class="day-number">{{ i }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="calendar-sidebar">
+      <div class="calendar-widget">
+        <h3>Upcoming Deadlines</h3>
+
+        <div class="calendar-event">
+          <span>Database Assignment</span>
+          <span>15 Jun</span>
+        </div>
+
+        <div class="calendar-event">
+          <span>DSA Sheet</span>
+          <span>18 Jun</span>
+        </div>
+      </div>
+
+      <div class="calendar-widget">
+        <h3>Upcoming Exams</h3>
+
+        <div class="calendar-event">
+          <span>OS Midterm</span>
+          <span>25 Jun</span>
+        </div>
+      </div>
+
+      <div class="calendar-widget">
+        <h3>Quick Actions</h3>
+
+        <button class="btn btn-primary">+ Add Event</button>
+
+        <button class="btn">+ Study Session</button>
+
+        <button class="btn">+ Exam</button>
+      </div>
+
+      <div class="calendar-widget">
+        <h3>Statistics</h3>
+
+        <div class="calendar-event">
+          <span>Events This Week</span>
+          <strong>5</strong>
+        </div>
+
+        <div class="calendar-event">
+          <span>Pending Deadlines</span>
+          <strong>3</strong>
+        </div>
+
+        <div class="calendar-event">
+          <span>Next Exam</span>
+          <strong>12 Days</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

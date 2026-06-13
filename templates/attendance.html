@@ -1,0 +1,101 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="page-header">
+  <h1>📊 Attendance Tracker</h1>
+  <p>Monitor attendance, identify shortages, and stay exam eligible.</p>
+</div>
+
+<!-- Add Subject -->
+
+<div class="content-card">
+  <div class="section-header">
+    <h2>Add Subject</h2>
+  </div>
+
+  <form method="POST" class="attendance-form">
+    <input type="text" name="subject" placeholder="Subject Name" required />
+
+    <input
+      type="number"
+      name="total"
+      placeholder="Total Classes"
+      min="0"
+      required
+    />
+
+    <input
+      type="number"
+      name="attended"
+      placeholder="Classes Attended"
+      min="0"
+      required
+    />
+
+    <button type="submit" class="btn btn-primary">Add Subject</button>
+  </form>
+</div>
+
+<!-- Attendance Overview -->
+
+<!-- Attendance Overview -->
+
+<div class="content-card">
+  <div class="section-header">
+    <h2>Attendance Overview</h2>
+  </div>
+
+  {% if subjects %}
+
+  <div class="attendance-cards">
+    {% for subject in subjects %} {% set percentage = ((subject.attended /
+    subject.total) * 100) if subject.total > 0 else 0 %}
+
+    <div class="attendance-subject-card">
+      <div class="attendance-top">
+        <h3>{{ subject.subject }}</h3>
+
+        <span class="attendance-percent"> {{ percentage|round(1) }}% </span>
+      </div>
+
+      <p>{{ subject.attended }} / {{ subject.total }} Classes Attended</p>
+
+      <div class="progress-bar">
+        <div
+          class="progress-fill {% if percentage >= 75 %} progress-good {% elif percentage >= 65 %} progress-warning {% else %} progress-danger {% endif %}"
+          style="width: {{ percentage }}%;"
+        ></div>
+      </div>
+      {% if percentage >= 75 %}
+
+      <p class="attendance-tip success">
+        You may miss a few upcoming classes safely.
+      </p>
+
+      {% else %}
+
+      <p class="attendance-tip danger">
+        Attendance below 75%. Attend upcoming classes.
+      </p>
+
+      {% endif %} {% if percentage >= 75 %}
+      <span class="status-good"> Eligible </span>
+      {% elif percentage >= 65 %}
+      <span class="status-warning"> Warning </span>
+      {% else %}
+      <span class="status-danger"> Critical </span>
+      {% endif %}
+    </div>
+
+    {% endfor %}
+  </div>
+
+  {% else %}
+
+  <div class="empty-state">
+    <p>No subjects added yet.</p>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

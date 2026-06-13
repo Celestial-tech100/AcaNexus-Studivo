@@ -464,7 +464,7 @@ def register():
 
     return render_template("register.html")
 
-
+# ================= LOGIN =================
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
@@ -487,13 +487,65 @@ def login():
 
     return render_template("login.html")
 
-
+# ================= LOGOUT  =================
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
 
+# ================= CALENDAR =================
+@app.route("/calendar")
+def calendar():
 
+    if "user_id" not in session:
+        return redirect("/login")
+
+    return render_template("calendar.html")
+
+# ================= ATTENDANCE =================
+@app.route("/attendance", methods=["GET", "POST"])
+def attendance():
+
+    conn = sqlite3.connect("database/acanexus.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+
+        subject = request.form["subject"]
+        total = request.form["total"]
+        attended = request.form["attended"]
+
+        cursor.execute("""
+            INSERT INTO attendance
+            (user_id, subject, attended, total)
+            VALUES (?, ?, ?, ?)
+        """, (
+            user_id,
+            subject,
+            attended,
+            total
+        ))
+
+        conn.commit()
+
+    cursor.execute("""
+        SELECT *
+        FROM attendance
+        WHERE user_id = ?
+        ORDER BY subject
+    """, (user_id,))
+
+    subjects = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        "attendance.html",
+        subjects=subjects
+    )
 # ================= RUN =================
 if __name__ == "__main__":
     create_database()

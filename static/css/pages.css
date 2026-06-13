@@ -406,3 +406,130 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+/* ==========================================
+   CALENDAR PAGE
+========================================== */
+
+.calendar-page{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+/* HEADER CONTROLS */
+
+.calendar-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+/* MAIN LAYOUT */
+
+.calendar-content{
+    display:flex;
+    gap:24px;
+    align-items:flex-start;
+}
+
+.calendar-main{
+    flex:1;
+    min-width:0;
+}
+
+.calendar-sidebar{
+    width:320px;
+    flex-shrink:0;
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+/* CALENDAR GRID */
+
+.calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:12px;
+}
+
+.calendar-day-name{
+    text-align:center;
+    font-weight:600;
+    color:var(--clr-primary);
+    padding:12px;
+}
+
+.calendar-day{
+    background:var(--clr-surface);
+    border:1px solid var(--clr-border);
+    border-radius:14px;
+
+    min-height:110px;
+    padding:12px;
+
+    transition:all .3s ease;
+}
+
+.calendar-day:hover{
+    transform:translateY(-4px);
+    border-color:var(--clr-primary);
+}
+
+.day-number{
+    font-weight:600;
+}
+
+/* SIDEBAR */
+
+.calendar-widget{
+    background:var(--clr-surface);
+    border:1px solid var(--clr-border);
+    border-radius:16px;
+    padding:18px;
+}
+
+.calendar-widget h3{
+    margin-bottom:16px;
+}
+
+.calendar-event{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.calendar-event:last-child{
+    border-bottom:none;
+}
+
+/* QUICK ACTION BUTTONS */
+
+.calendar-widget .btn{
+    width:100%;
+    margin-bottom:10px;
+}
+
+.calendar-widget .btn:last-child{
+    margin-bottom:0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px){
+
+    .calendar-content{
+        flex-direction:column;
+    }
+
+    .calendar-sidebar{
+        width:100%;
+    }
+}
