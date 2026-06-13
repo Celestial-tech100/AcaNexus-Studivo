@@ -546,6 +546,73 @@ def attendance():
         "attendance.html",
         subjects=subjects
     )
+
+# ================= SETTINGS =================
+@app.route("/settings", methods=["GET", "POST"])
+def settings():
+
+    conn = sqlite3.connect("database/acanexus.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+
+        full_name = request.form["full_name"]
+        university = request.form["university"]
+        course = request.form["course"]
+        branch = request.form["branch"]
+        year = request.form["year"]
+        semester = request.form["semester"]
+        session_value = request.form["session"]
+        bio = request.form["bio"]
+
+        cursor.execute("""
+            UPDATE profiles
+            SET
+                full_name = ?,
+                university = ?,
+                course = ?,
+                branch = ?,
+                year = ?,
+                semester = ?,
+                session = ?,
+                bio = ?
+            WHERE user_id = ?
+        """, (
+            full_name,
+            university,
+            course,
+            branch,
+            year,
+            semester,
+            session_value,
+            bio,
+            user_id
+        ))
+
+        conn.commit()
+
+    cursor.execute("""
+        SELECT *
+        FROM profiles
+        WHERE user_id = ?
+    """, (user_id,))
+
+    profile = cursor.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "settings.html",
+        profile=profile
+    )
+
+
+
+
+
 # ================= RUN =================
 if __name__ == "__main__":
     create_database()

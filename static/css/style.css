@@ -17,6 +17,7 @@
 @import "assignments.css";
 @import "auth.css";
 @import "attendance.css";
+@import "settings.css";
 
 html {
   -webkit-font-smoothing: antialiased;

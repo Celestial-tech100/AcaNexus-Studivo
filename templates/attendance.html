@@ -65,7 +65,8 @@
           style="width: {{ percentage }}%;"
         ></div>
       </div>
-      {% if percentage >= 75 %}
+      {% if percentage >= 75 %} {% set can_miss = ((subject.attended / 0.75) -
+      subject.total) | int %}
 
       <p class="attendance-tip success">
         You may miss a few upcoming classes safely.

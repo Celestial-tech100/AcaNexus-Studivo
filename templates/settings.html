@@ -1,0 +1,131 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="page-header">
+  <h1>⚙ Settings</h1>
+  <p>Manage your profile, preferences and account settings.</p>
+</div>
+
+<div class="settings-page">
+  <!-- PROFILE -->
+
+  <div class="content-card">
+    <div class="section-header">
+      <h2>👤 Profile</h2>
+    </div>
+
+    <form method="POST" class="settings-form">
+      <input
+        type="text"
+        name="full_name"
+        placeholder="Full Name"
+        value="{{ profile['full_name'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="university"
+        placeholder="University"
+        value="{{ profile['university'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="course"
+        placeholder="Course"
+        value="{{ profile['course'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="branch"
+        placeholder="Branch"
+        value="{{ profile['branch'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="year"
+        placeholder="Year"
+        value="{{ profile['year'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="semester"
+        placeholder="Semester"
+        value="{{ profile['semester'] if profile else '' }}"
+      />
+
+      <input
+        type="text"
+        name="session"
+        placeholder="Session"
+        value="{{ profile['session'] if profile else '' }}"
+      />
+
+      <textarea name="bio" rows="4" placeholder="Bio">
+{{ profile['bio'] if profile else '' }}</textarea
+      >
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+
+  <!-- PREFERENCES -->
+
+  <div class="content-card">
+    <div class="section-header">
+      <h2>🎨 Preferences</h2>
+    </div>
+
+    <div class="settings-option">
+      <div>
+        <h3>Theme</h3>
+        <p>Dark Academic Theme</p>
+      </div>
+
+      <button class="btn">Active</button>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+
+  <div class="content-card">
+    <div class="section-header">
+      <h2>🔒 Security</h2>
+    </div>
+
+    <div class="settings-option">
+      <div>
+        <h3>Password</h3>
+        <p>Change your account password.</p>
+      </div>
+
+      <button class="btn">Change</button>
+    </div>
+  </div>
+
+  <!-- ACCOUNT -->
+
+  <div class="content-card">
+    <div class="section-header">
+      <h2>🚪 Account</h2>
+    </div>
+
+    <a href="{{ url_for('logout') }}" class="btn btn-primary"> Logout </a>
+  </div>
+
+  <!-- DANGER ZONE -->
+
+  <div class="content-card danger-card">
+    <div class="section-header">
+      <h2>⚠ Danger Zone</h2>
+    </div>
+
+    <p>Deleting your account will permanently remove all your data.</p>
+
+    <button class="btn btn-danger">Delete Account</button>
+  </div>
+</div>
+
+{% endblock %}
