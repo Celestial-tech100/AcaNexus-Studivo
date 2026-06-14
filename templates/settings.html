@@ -12,8 +12,20 @@
     <div class="section-header">
       <h2>👤 Profile</h2>
     </div>
+    <div class="settings-email">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
 
+    {% if saved %}
+    <div class="success-message">✅ Profile updated successfully.</div>
+    {% endif %}
     <form method="POST" class="settings-form">
+
+      <input
+          type="hidden"
+          name="form_type"
+          value="profile"
+      >
       <input
         type="text"
         name="full_name"
@@ -72,7 +84,6 @@
   </div>
 
   <!-- PREFERENCES -->
-
   <div class="content-card">
     <div class="section-header">
       <h2>🎨 Preferences</h2>
@@ -84,29 +95,90 @@
         <p>Dark Academic Theme</p>
       </div>
 
-      <button class="btn">Active</button>
+      <button id="themeToggle" class="btn  btn-primary">
+  <span id="themeIcon">🌙</span>
+</button>
     </div>
   </div>
 
-  <!-- SECURITY -->
-
+  <!--   Change Email    -->
   <div class="content-card">
+
     <div class="section-header">
-      <h2>🔒 Security</h2>
+        <h2>📧 Change Email</h2>
     </div>
 
-    <div class="settings-option">
-      <div>
-        <h3>Password</h3>
-        <p>Change your account password.</p>
-      </div>
+    <form method="POST" class="settings-form">
 
-      <button class="btn">Change</button>
+        <input
+            type="hidden"
+            name="form_type"
+            value="email"
+        >
+
+        <input
+            type="email"
+            name="new_email"
+            value="{{ user['email'] }}"
+            required
+        >
+
+        <button
+            type="submit"
+            class="btn btn-primary"
+        >
+            Update Email
+        </button>
+
+    </form>
+
+</div>
+  <!-- SECURITY -->
+  <div class="content-card">
+    <div class="section-header">
+      <h2>🔒 Security- Change Password</h2>
+    </div>
+    {% if password_message %}
+    <div class="success-message">{{ password_message }}</div>
+    {% endif %}
+
+    <form method="POST" class="settings-form">
+
+    <input
+      type="hidden"
+      name="form_type"
+      value="password"
+    >
+
+    <input
+      type="password"
+      name="current_password"
+      placeholder="Current Password"
+      required
+    >
+
+    <input
+      type="password"
+      name="new_password"
+      placeholder="New Password"
+      required
+    >
+
+    <input
+      type="password"
+      name="confirm_password"
+      placeholder="Confirm New Password"
+      required
+    >
+
+    <button type="submit" class="btn btn-primary">
+      Change Password
+    </button>
+    </form>
     </div>
   </div>
 
   <!-- ACCOUNT -->
-
   <div class="content-card">
     <div class="section-header">
       <h2>🚪 Account</h2>
@@ -123,9 +195,15 @@
     </div>
 
     <p>Deleting your account will permanently remove all your data.</p>
-
-    <button class="btn btn-danger">Delete Account</button>
+    <form method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+      <input
+        type="hidden"
+        name="form_type"
+        value="delete_account"
+      >
+    <button class="btn btn-danger" type="submit">Delete Account</button></form>
   </div>
 </div>
 
 {% endblock %}
+<script src ="{{ url_for('static', filename='js/script.js') }}"></script>

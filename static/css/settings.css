@@ -43,3 +43,37 @@
     color:var(--clr-text);
     resize:vertical;
 }
+.success-message{
+    background:rgba(74,222,128,.12);
+    border:1px solid rgba(74,222,128,.35);
+    color:#4ade80;
+    padding:12px 16px;
+    border-radius:12px;
+    margin-bottom:16px;
+}
+.dark-mode .btn-primary {
+    background-color: #d4af37 !important;  /* golden */
+    border-color: #d4af37 !important;
+    color: black !important;
+}
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+#themeToggle {
+    font-size: 18px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    display: inline-block;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+/* rotation animation trigger */
+.rotate {
+    transform: rotate(180deg) scale(1.2);
+    opacity: 0.5;
+}

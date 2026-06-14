@@ -556,60 +556,155 @@ def settings():
     cursor = conn.cursor()
 
     user_id = session["user_id"]
+    saved = False
+    password_message = None
 
     if request.method == "POST":
 
-        full_name = request.form["full_name"]
-        university = request.form["university"]
-        course = request.form["course"]
-        branch = request.form["branch"]
-        year = request.form["year"]
-        semester = request.form["semester"]
-        session_value = request.form["session"]
-        bio = request.form["bio"]
+        form_type = request.form.get("form_type")
 
-        cursor.execute("""
-            UPDATE profiles
-            SET
-                full_name = ?,
-                university = ?,
-                course = ?,
-                branch = ?,
-                year = ?,
-                semester = ?,
-                session = ?,
-                bio = ?
-            WHERE user_id = ?
-        """, (
-            full_name,
-            university,
-            course,
-            branch,
-            year,
-            semester,
-            session_value,
-            bio,
-            user_id
-        ))
+        if form_type == "profile":
+                full_name = request.form["full_name"]
+                university = request.form["university"]
+                course = request.form["course"]
+                branch = request.form["branch"]
+                year = request.form["year"]
+                semester = request.form["semester"]
+                session_value = request.form["session"]
+                bio = request.form["bio"]
 
-        conn.commit()
+                cursor.execute("""
+                    UPDATE profiles
+                    SET
+                        full_name = ?,
+                        university = ?,
+                        course = ?,
+                        branch = ?,
+                        year = ?,
+                        semester = ?,
+                        session = ?,
+                        bio = ?
+                    WHERE user_id = ?
+                """, (
+                    full_name,
+                    university,
+                    course,
+                    branch,
+                    year,
+                    semester,
+                    session_value,
+                    bio,
+                    user_id
+                ))
+
+                conn.commit()
+                
+                saved = True
+                
+        elif form_type == "password":
+
+            current_password = request.form["current_password"]
+            new_password = request.form["new_password"]
+            confirm_password = request.form["confirm_password"]
+
+            cursor.execute("""
+                SELECT password
+                FROM users
+                WHERE id = ?
+            """, (user_id,))
+
+            user = cursor.fetchone()
+
+            if not check_password_hash(
+                user["password"],
+                current_password
+            ):
+
+                password_message = "❌ Current password is incorrect."
+
+            elif new_password != confirm_password:
+
+                password_message = "❌ New passwords do not match."
+
+            else:
+
+                new_hash = generate_password_hash(
+                    new_password
+                )
+
+                cursor.execute("""
+                    UPDATE users
+                    SET password = ?
+                    WHERE id = ?
+                """, (
+                    new_hash,
+                    user_id
+                ))
+
+                conn.commit()
+
+                password_message = "✅ Password changed successfully."
+                
+        elif form_type == "email":
+
+            new_email = request.form["new_email"]
+
+            cursor.execute("""
+                UPDATE users
+                SET email = ?
+                WHERE id = ?
+            """, (
+                new_email,
+                user_id
+            ))
+
+            conn.commit()
 
     cursor.execute("""
-        SELECT *
-        FROM profiles
-        WHERE user_id = ?
-    """, (user_id,))
+            SELECT *
+            FROM profiles
+            WHERE user_id = ?
+        """, (user_id,))
 
     profile = cursor.fetchone()
+    
+    cursor.execute("""
+        SELECT email
+        FROM users
+        WHERE id = ?
+    """, (user_id,))
+
+    user = cursor.fetchone()
 
     conn.close()
 
     return render_template(
         "settings.html",
-        profile=profile
+        profile=profile,
+        user=user,
+        saved=saved,
+        password_message=password_message
     )
 
+# ================= DELETE ACCOUNT  =================
+@app.route("/delete_account", methods=["POST"])
+def delete_account():
+    if "user_id" not in session:
+        return redirect("/login")
 
+    user_id = session["user_id"]
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+
+    conn.commit()
+    conn.close()
+
+    session.clear()
+
+    return redirect("/register")
 
 
 
