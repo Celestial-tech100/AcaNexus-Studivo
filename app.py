@@ -494,13 +494,142 @@ def logout():
     return redirect("/")
 
 # ================= CALENDAR =================
+import calendar as cal
+from datetime import datetime
+
+
 @app.route("/calendar")
 def calendar():
 
     if "user_id" not in session:
         return redirect("/login")
 
-    return render_template("calendar.html")
+    month = request.args.get("month", type=int)
+    year = request.args.get("year", type=int)
+
+    today = datetime.now()
+
+    today_day = today.day
+    today_month = today.month
+    today_year = today.year
+
+    if not month:
+        month = today.month
+
+    if not year:
+        year = today.year
+
+    month_name = cal.month_name[month]
+
+    calendar_days = cal.monthcalendar(year, month)
+
+    prev_month = month - 1
+    prev_year = year
+
+    if prev_month == 0:
+        prev_month = 12
+        prev_year -= 1
+
+    next_month = month + 1
+    next_year = year
+
+    if next_month == 13:
+        next_month = 1
+        next_year += 1
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT id,
+           title,
+           event_type,
+           event_date
+    FROM calendar_events
+    WHERE user_id = ?
+    ORDER BY event_date
+""", (session["user_id"],))
+
+    rows = cursor.fetchall()
+
+    events = {}
+
+    for event_id, title, event_type, event_date in rows:
+
+        if event_date not in events:
+            events[event_date] = []
+
+        events[event_date].append({
+            "id": event_id,
+            "title": title,
+            "type": event_type
+        })
+
+    conn.close()
+
+    return render_template(
+        "calendar.html",
+        calendar_days=calendar_days,
+        month=month,
+        year=year,
+        month_name=month_name,
+        prev_month=prev_month,
+        prev_year=prev_year,
+        next_month=next_month,
+        next_year=next_year,
+        today_day=today_day,
+        today_month=today_month,
+        today_year=today_year,
+        events=events
+    )
+
+# ================= Add-Event  =================
+@app.route("/add-event", methods=["POST"])
+def add_event():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+
+    title = request.form["title"]
+    event_date = request.form["event_date"]
+    event_type = request.form["event_type"]
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO calendar_events
+        (user_id, title, event_type, event_date)
+        VALUES (?, ?, ?, ?)
+    """, (user_id, title, event_type, event_date))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/calendar")
+
+# ================= DELETE EVENT =================
+@app.route("/delete-event/<int:event_id>", methods=["POST"])
+def delete_event(event_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM calendar_events
+        WHERE id = ?
+        AND user_id = ?
+    """, (event_id, session["user_id"]))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/calendar")
 
 # ================= ATTENDANCE =================
 @app.route("/attendance", methods=["GET", "POST"])
