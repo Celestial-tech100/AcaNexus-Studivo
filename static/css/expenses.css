@@ -126,3 +126,35 @@
 
     transform: translateY(-2px);
 }
+/* =========================
+   4. EXPENSES PAGE LAYOUT
+   ========================= */
+
+.expense-summary{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.expense-total-card{
+    background: var(--clr-card);
+    border: 1px solid var(--clr-border);
+
+    padding: 18px;
+    border-radius: var(--radius-lg);
+
+    text-align: center;
+}
+
+.expense-total-card h3{
+    font-size: 14px;
+    color: var(--clr-muted);
+}
+
+.expense-total-card p{
+    margin-top: 6px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--clr-text);
+}

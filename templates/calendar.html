@@ -125,6 +125,10 @@
               <div>
                 <small>{{ date }}</small>
 
+                <a href="/edit-event/{{ event.id }}" class="edit-event-btn">
+                  ✏️
+                </a>
+
                 <form
                   action="/delete-event/{{ event.id }}"
                   method="POST"

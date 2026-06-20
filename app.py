@@ -631,6 +631,67 @@ def delete_event(event_id):
 
     return redirect("/calendar")
 
+# ================= EDIT EVENT =================
+@app.route("/edit-event/<int:event_id>", methods=["GET", "POST"])
+def edit_event(event_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("database/acanexus.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        title = request.form["title"]
+        event_date = request.form["event_date"]
+        event_type = request.form["event_type"]
+
+        cursor.execute("""
+            UPDATE calendar_events
+            SET title = ?,
+                event_type = ?,
+                event_date = ?
+            WHERE id = ?
+            AND user_id = ?
+        """, (
+            title,
+            event_type,
+            event_date,
+            event_id,
+            session["user_id"]
+        ))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/calendar")
+
+    cursor.execute("""
+        SELECT id,
+               title,
+               event_type,
+               event_date
+        FROM calendar_events
+        WHERE id = ?
+        AND user_id = ?
+    """, (
+        event_id,
+        session["user_id"]
+    ))
+
+    event = cursor.fetchone()
+
+    conn.close()
+
+    if not event:
+        return redirect("/calendar")
+
+    return render_template(
+        "edit_event.html",
+        event=event
+    )
+
 # ================= ATTENDANCE =================
 @app.route("/attendance", methods=["GET", "POST"])
 def attendance():

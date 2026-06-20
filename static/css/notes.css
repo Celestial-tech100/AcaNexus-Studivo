@@ -199,3 +199,21 @@
     resize: vertical;
     min-height: 180px;
 }
+
+/* =========================
+   2. NOTES PAGE LAYOUT
+   ========================= */
+
+.notes-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+/* empty state (future-proof) */
+.notes-empty{
+    text-align: center;
+    color: var(--clr-muted);
+    padding: 40px 20px;
+}
