@@ -1,3 +1,5 @@
+from asyncio import events
+
 from flask import Flask, render_template, request, redirect, session, url_for
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -497,7 +499,7 @@ def logout():
 import calendar as cal
 from datetime import datetime
 
-
+@app.route("/calendar")
 @app.route("/calendar")
 def calendar():
 
@@ -540,15 +542,16 @@ def calendar():
     conn = sqlite3.connect("database/acanexus.db")
     cursor = conn.cursor()
 
+    # Calendar Events
     cursor.execute("""
-    SELECT id,
-           title,
-           event_type,
-           event_date
-    FROM calendar_events
-    WHERE user_id = ?
-    ORDER BY event_date
-""", (session["user_id"],))
+        SELECT id,
+               title,
+               event_type,
+               event_date
+        FROM calendar_events
+        WHERE user_id = ?
+        ORDER BY event_date
+    """, (session["user_id"],))
 
     rows = cursor.fetchall()
 
@@ -563,6 +566,29 @@ def calendar():
             "id": event_id,
             "title": title,
             "type": event_type
+        })
+
+    # Assignments
+    cursor.execute("""
+        SELECT id,
+               title,
+               due_date,
+               status
+        FROM assignments
+        WHERE user_id = ?
+    """, (session["user_id"],))
+
+    assignment_rows = cursor.fetchall()
+
+    for assignment_id, title, due_date, status in assignment_rows:
+
+        if due_date not in events:
+            events[due_date] = []
+
+        events[due_date].append({
+            "id": assignment_id,
+            "title": title,
+            "type": "Assignment"
         })
 
     conn.close()

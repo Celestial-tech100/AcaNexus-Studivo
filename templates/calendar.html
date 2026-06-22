@@ -54,8 +54,9 @@
             class="calendar-event-badge {{ event.type|lower|replace(' ','-') }}"
           >
             {% if event.type == "Exam" %} 🎓 {% elif event.type == "Study
-            Session" %} 📚 {% elif event.type == "Event" %} 📌 {% else %} 📅 {%
-            endif %} {{ event.title }}
+            Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% elif
+            event.type == "Event" %} 📌 {% else %} 📅 {% endif %} {{
+            event.title}}
           </div>
 
           {% endfor %} {% endif %} {% endif %}
