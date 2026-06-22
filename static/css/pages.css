@@ -356,12 +356,16 @@
 
     transition:all 0.2s ease;
 } 
-input[type="date"]{
-    color-scheme: dark;
-}
-
 input[type="date"]::-webkit-calendar-picker-indicator{
-    filter: invert(1);
+    filter:
+        brightness(0)
+        saturate(100%)
+        invert(72%)
+        sepia(58%)
+        saturate(512%)
+        hue-rotate(6deg)
+        brightness(95%)
+        contrast(90%);
 }
 
 .delete-event-btn:hover{
