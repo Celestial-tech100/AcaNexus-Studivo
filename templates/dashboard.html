@@ -15,7 +15,6 @@
 
   <body>
     <div class="dashboard-container">
-      <!-- Sidebar -->
       <aside class="sidebar">
         <div class="sidebar-logo">
           <h2>AcaNexus</h2>
@@ -33,7 +32,6 @@
           <li><a href="/settings">⚙️ Settings</a></li>
         </ul>
 
-        <!-- USER SECTION -->
         <div class="sidebar-user">
           <div class="user-avatar">{{ session.username[0]|upper }}</div>
 
@@ -48,15 +46,12 @@
         </div>
       </aside>
 
-      <!-- Main Content -->
       <main class="main-content">
-        <!-- Welcome Header -->
         <div class="dashboard-header fade-in">
           <h1>Welcome Back, {{ session.username }} 👋</h1>
           <p>You have {{ pending_assignments }} assignments pending today.</p>
         </div>
 
-        <!-- Statistics -->
         <section class="dashboard-section">
           <h2 class="dashboard-section-title">Overview</h2>
 
@@ -82,6 +77,7 @@
             </div>
           </div>
         </section>
+
         <section class="dashboard-section">
           <h2 class="dashboard-section-title">Productivity Insights</h2>
 
@@ -118,7 +114,45 @@
           </div>
         </section>
 
-        <!-- Quick Actions -->
+        <section class="dashboard-section">
+          <h2 class="dashboard-section-title">Upcoming Deadlines</h2>
+
+          <div class="dashboard-card deadlines-widget">
+            {% if upcoming_deadlines %}
+            <ul class="deadline-list">
+              {% for item in upcoming_deadlines %}
+              <li class="deadline-item">
+                <div class="deadline-icon">
+                  {% if item.type == 'Assignment' %}
+                  <span title="Assignment">📝</span>
+                  {% elif item.type == 'Exam' %}
+                  <span title="Exam">🎓</span>
+                  {% elif item.type == 'Study Session' %}
+                  <span title="Study Session">📚</span>
+                  {% else %}
+                  <span title="Event">📌</span>
+                  {% endif %}
+                </div>
+
+                <div class="deadline-info">
+                  <h4 class="deadline-title">{{ item.title }}</h4>
+                  <p class="deadline-context">{{ item.context }}</p>
+                </div>
+
+                <div class="deadline-date">
+                  <span class="gold-badge">{{ item.event_date }}</span>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <div class="empty-state">
+              <p>No upcoming deadlines. You're all caught up! ✨</p>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
         <section class="dashboard-section">
           <h2 class="dashboard-section-title">Quick Actions</h2>
 
@@ -131,7 +165,6 @@
           </div>
         </section>
 
-        <!-- Assignment Status -->
         <section class="dashboard-section">
           <h2 class="dashboard-section-title">Assignment Overview</h2>
 
@@ -153,7 +186,6 @@
           </div>
         </section>
 
-        <!-- Expense Breakdown -->
         <section class="dashboard-section">
           <h2 class="dashboard-section-title">Expense Breakdown</h2>
 
@@ -170,6 +202,7 @@
         </section>
       </main>
     </div>
+
     <div id="logoutModal" class="logout-modal">
       <div class="logout-modal-content">
         <h2>🚪 Logout</h2>
@@ -187,6 +220,7 @@
         </div>
       </div>
     </div>
+
     <script>
       function openLogoutModal() {
         document.getElementById("logoutModal").classList.add("show");

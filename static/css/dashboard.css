@@ -126,40 +126,35 @@
   .dashboard-widgets {
     grid-template-columns: 1fr;
   }
-}.dashboard-card {
+}
+
+.dashboard-card {
     position: relative;
     overflow: hidden;
-
     transition: all 0.35s ease;
 }
 
 .dashboard-card:hover {
     transform: translateY(-8px);
-
     border-color: rgba(212,168,83,0.4);
-
     box-shadow:
         0 10px 30px rgba(0,0,0,0.4),
         0 0 20px rgba(212,168,83,0.15);
 }
+
 .dashboard-card::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 2px;
-
     background: linear-gradient(
         90deg,
         transparent,
         #d4a853,
         transparent
     );
-
     opacity: 0;
     transition: 0.4s;
 }
@@ -167,69 +162,60 @@
 .dashboard-card:hover::before {
     opacity: 1;
 }
-@keyframes floating {
 
+@keyframes floating {
     0% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-4px);
     }
-
     100% {
         transform: translateY(0);
     }
 }
+
 .dashboard-number {
     animation: floating 4s ease-in-out infinite;
 }
-.dashboard-number {
 
+.dashboard-number {
     font-size: 2.2rem;
     font-weight: 700;
-
     color: var(--clr-gold);
-
     text-shadow:
         0 0 10px rgba(212,168,83,0.4),
         0 0 20px rgba(212,168,83,0.2);
 }
+
 .sidebar-menu a:hover {
-
     color: var(--clr-gold);
-
     padding-left: 8px;
 }
+
 .sidebar-menu a.active {
-
     color: var(--clr-gold);
-
     background: rgba(212,168,83,0.12);
-
     border-left: 3px solid var(--clr-gold);
-
     padding-left: 12px;
 }
-.dashboard-header h1 {
 
+.dashboard-header h1 {
     background: linear-gradient(
         90deg,
         #ffffff,
         #d4a853
     );
-
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-@keyframes fadeUp {
 
+@keyframes fadeUp {
     from {
         opacity: 0;
         transform: translateY(25px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -239,19 +225,17 @@
 .dashboard-section {
     animation: fadeUp .6s ease;
 }
+
 .expense-row {
-
     padding: 14px 0;
-
     transition: .3s;
 }
 
 .expense-row:hover {
-
     padding-left: 10px;
-
     color: var(--clr-gold);
 }
+
 /* =========================
    USER PROFILE SECTION
    ========================= */
@@ -274,19 +258,15 @@
 .user-avatar {
   width: 50px;
   height: 50px;
-
   border-radius: 50%;
-
   background: linear-gradient(
     135deg,
     #d4a853,
     #f3cf7a
   );
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-weight: 700;
   color: #111;
   margin-bottom: 12px;
@@ -305,18 +285,12 @@
 .logout-btn {
   width: 100%;
   margin-top: 16px;
-
   padding: 12px;
-
   border: none;
   border-radius: 12px;
-
   background: rgba(212,168,83,0.15);
-
   color: #d4a853;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
 
@@ -331,16 +305,12 @@
 
 .logout-modal {
   display: none;
-
   position: fixed;
   inset: 0;
-
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(8px);
-
   justify-content: center;
   align-items: center;
-
   z-index: 999;
 }
 
@@ -351,17 +321,11 @@
 .logout-modal-content {
   width: 400px;
   max-width: 90%;
-
   background: #141720;
-
   border: 1px solid rgba(212,168,83,0.25);
-
   border-radius: 20px;
-
   padding: 30px;
-
   text-align: center;
-
   animation: fadeUp 0.3s ease;
 }
 
@@ -383,13 +347,9 @@
 .cancel-btn,
 .confirm-btn {
   flex: 1;
-
   padding: 12px;
-
   border-radius: 10px;
-
   border: none;
-
   cursor: pointer;
 }
 
@@ -403,6 +363,7 @@
   color: black;
   font-weight: 600;
 }
+
 /* ==========================
    DASHBOARD PROGRESS BAR
    ========================== */
@@ -419,12 +380,77 @@
 .progress-fill {
   height: 100%;
   border-radius: 50px;
-
   background: linear-gradient(
     90deg,
     #d4a853,
     #ffd67a
   );
-
   transition: width 1s ease;
+}
+
+/* ==========================================
+   UPCOMING DEADLINES WIDGET ADD-ONS
+   ========================================== */
+
+.deadlines-widget {
+    padding: 20px;
+}
+
+.deadline-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.deadline-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Matches your subtle borders */
+}
+
+.deadline-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.deadline-icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.deadline-info {
+    flex-grow: 1;
+}
+
+.deadline-title {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.deadline-context {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #8a8fa8; /* Matches your user-info span */
+}
+
+.gold-badge {
+    background-color: rgba(212, 168, 83, 0.12);
+    color: #d4a853; /* Your exact gold hex */
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    white-space: nowrap;
+}
+
+.empty-state {
+    text-align: center;
+    color: #8a8fa8;
+    font-style: italic;
+    padding: 20px 0;
 }

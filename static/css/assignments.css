@@ -163,6 +163,8 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  position: relative;
+    z-index: 10; /* Elevates the container above the card background */
 }
 
 /* smooth button spacing fix */
@@ -334,11 +336,7 @@
 
     transition:0.3s ease;
 }
-.assignment-actions{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-}
+
 .assignment-card:hover{
     transform:translateY(-4px);
 }
@@ -367,6 +365,9 @@
   display: inline-block;
   transition: 0.2s ease;
   cursor: pointer;
+  position: relative;
+  z-index: 20; /* Elevates the buttons above everything else */
+  pointer-events: auto !important; /* Strictly enforces clickability */
 }
 
 .complete-btn {

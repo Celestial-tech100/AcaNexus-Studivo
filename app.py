@@ -139,7 +139,6 @@ def profile():
 # ================= DASHBOARD =================
 @app.route("/dashboard")
 def dashboard():
-
     if "user_id" not in session:
         return redirect("/login")
 
@@ -188,6 +187,49 @@ def dashboard():
 
     completion_percentage = int((completed / total_assignments) * 100) if total_assignments else 0
 
+    # === NEW: FETCH UPCOMING DEADLINES WIDGET DATA ===
+    
+    # 1. Fetch pending Assignments
+    cursor.execute("""
+        SELECT title, subject AS context, due_date AS event_date, 'Assignment' AS type
+        FROM assignments
+        WHERE user_id=? AND due_date >= ? AND status != 'Completed'
+    """, (uid, today))
+    assignments_data = cursor.fetchall()
+
+    # 2. Fetch upcoming Calendar Events (excluding Assignments to prevent duplicates)
+    cursor.execute("""
+        SELECT title, event_type AS context, event_date, event_type AS type
+        FROM calendar_events
+        WHERE user_id=? AND event_date >= ? AND event_type != 'Assignment'
+    """, (uid, today))
+    events_data = cursor.fetchall()
+
+    # 3. Unify and Sort the lists
+    all_deadlines = []
+    
+    for row in assignments_data:
+        all_deadlines.append({
+            "title": row[0],
+            "context": row[1],
+            "event_date": row[2],
+            "type": row[3]
+        })
+
+    for row in events_data:
+        all_deadlines.append({
+            "title": row[0],
+            "context": row[1],
+            "event_date": row[2],
+            "type": row[3]
+        })
+
+    # Sort by date ascending (closest first)
+    all_deadlines.sort(key=lambda x: x["event_date"])
+
+    # Limit to top 5 for the widget
+    upcoming_deadlines = all_deadlines[:5]
+
     conn.close()
 
     return render_template(
@@ -200,9 +242,9 @@ def dashboard():
         total_expenses=total_expenses,
         category_totals=category_totals,
         productivity_score=productivity_score,
-        completion_percentage=completion_percentage
+        completion_percentage=completion_percentage,
+        upcoming_deadlines=upcoming_deadlines  # Passed the new widget data
     )
-
 
 # ================= NOTES =================
 @app.route("/notes", methods=["GET", "POST"])
@@ -338,9 +380,14 @@ def assignments():
     )
 
 
-# ================= COMPLETE =================
+# ================= COMPLETE Assignment =================
 @app.route("/complete_assignment/<int:assignment_id>")
 def complete_assignment(assignment_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+    print(f"DEBUG: Server received COMPLETE request for assignment {assignment_id}")
 
     conn = sqlite3.connect("database/acanexus.db")
     cursor = conn.cursor()
@@ -349,8 +396,8 @@ def complete_assignment(assignment_id):
         UPDATE assignments
         SET status='Completed'
         WHERE id=? AND user_id=?
-    """, (assignment_id, session.get("user_id")))
-
+    """, (assignment_id, user_id))
+    
     conn.commit()
     conn.close()
 
@@ -359,6 +406,11 @@ def complete_assignment(assignment_id):
 # ================= DELETE ASSIGNMENT =================
 @app.route("/delete_assignment/<int:assignment_id>")
 def delete_assignment(assignment_id):
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+    print(f"DEBUG: Server received DELETE request for assignment {assignment_id}")
 
     conn = sqlite3.connect("database/acanexus.db")
     cursor = conn.cursor()
@@ -366,8 +418,8 @@ def delete_assignment(assignment_id):
     cursor.execute("""
         DELETE FROM assignments
         WHERE id=? AND user_id=?
-    """, (assignment_id, session.get("user_id")))
-
+    """, (assignment_id, user_id))
+    
     conn.commit()
     conn.close()
 
