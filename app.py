@@ -596,14 +596,20 @@ def calendar():
 
     # Calendar Events
     cursor.execute("""
-        SELECT id,
-               title,
-               event_type,
-               event_date
-        FROM calendar_events
-        WHERE user_id = ?
-        ORDER BY event_date
-    """, (session["user_id"],))
+    SELECT id,
+           title,
+           event_type,
+           event_date
+    FROM calendar_events
+    WHERE user_id = ?
+      AND strftime('%m', event_date) = ?
+      AND strftime('%Y', event_date) = ?
+    ORDER BY event_date
+""", (
+    session["user_id"],
+    f"{month:02d}",
+    str(year)
+))
 
     rows = cursor.fetchall()
 
@@ -622,13 +628,20 @@ def calendar():
 
     # Assignments
     cursor.execute("""
-        SELECT id,
-               title,
-               due_date,
-               status
-        FROM assignments
-        WHERE user_id = ?
-    """, (session["user_id"],))
+    SELECT id,
+           title,
+           due_date,
+           status
+    FROM assignments
+    WHERE user_id = ?
+      AND status = 'Pending'
+      AND strftime('%m', due_date) = ?
+      AND strftime('%Y', due_date) = ?
+""", (
+    session["user_id"],
+    f"{month:02d}",
+    str(year)
+))
 
     assignment_rows = cursor.fetchall()
 

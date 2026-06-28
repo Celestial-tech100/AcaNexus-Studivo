@@ -2,15 +2,15 @@
 
 <div class="page-header">
   <h1>📅 Calendar & Planner</h1>
-  <p>Track assignments, study sessions, exams, and important dates.</p>
+  <p>Track assignments, study sessions, exams and important dates.</p>
 </div>
 
 <div class="calendar-page">
-  <!-- Toolbar -->
+  <!-- Calendar Navigation -->
   <div class="calendar-toolbar">
     <a
-      href="{{ url_for('calendar', month=prev_month, year=prev_year) }}"
       class="btn"
+      href="{{ url_for('calendar', month=prev_month, year=prev_year) }}"
     >
       ← Previous
     </a>
@@ -18,16 +18,16 @@
     <h2>{{ month_name }} {{ year }}</h2>
 
     <a
-      href="{{ url_for('calendar', month=next_month, year=next_year) }}"
       class="btn"
+      href="{{ url_for('calendar', month=next_month, year=next_year) }}"
     >
       Next →
     </a>
   </div>
 
-  <!-- Main Content -->
   <div class="calendar-content">
-    <!-- Calendar Grid -->
+    <!-- ================= CALENDAR ================= -->
+
     <div class="calendar-main">
       <div class="calendar-grid">
         <div class="calendar-day-name">Sun</div>
@@ -41,7 +41,7 @@
         {% for week in calendar_days %} {% for day in week %}
 
         <div
-          class="calendar-day {% if day == today_day and month == today_month and year == today_year %} today {% endif %}"
+          class="calendar-day {% if day == today_day and month == today_month and year == today_year %}today{% endif %}"
         >
           {% if day != 0 %}
 
@@ -54,9 +54,8 @@
             class="calendar-event-badge {{ event.type|lower|replace(' ','-') }}"
           >
             {% if event.type == "Exam" %} 🎓 {% elif event.type == "Study
-            Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% elif
-            event.type == "Event" %} 📌 {% else %} 📅 {% endif %} {{
-            event.title}}
+            Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% else %}
+            📌 {% endif %} {{ event.title }}
           </div>
 
           {% endfor %} {% endif %} {% endif %}
@@ -66,107 +65,89 @@
       </div>
     </div>
 
-    <!-- Right Sidebar -->
+    <!-- ================= SIDEBAR ================= -->
+
     <div class="calendar-sidebar">
-      <div class="calendar-widget">
-        <h3>Upcoming Deadlines</h3>
-
-        <div class="calendar-event">
-          <span>Database Assignment</span>
-          <span>15 Jun</span>
-        </div>
-
-        <div class="calendar-event">
-          <span>DSA Sheet</span>
-          <span>18 Jun</span>
-        </div>
-      </div>
-
-      <div class="calendar-widget">
-        <h3>Upcoming Exams</h3>
-
-        <div class="calendar-event">
-          <span>OS Midterm</span>
-          <span>25 Jun</span>
-        </div>
-      </div>
+      <!-- Add Event -->
 
       <div class="calendar-widget">
         <h3>Add New Event</h3>
 
-        <form action="/add-event" method="POST">
+        <form action="{{ url_for('add_event') }}" method="POST">
           <input type="text" name="title" placeholder="Event title" required />
 
           <input type="date" name="event_date" required />
 
           <select name="event_type">
             <option value="Event">Event</option>
-
             <option value="Study Session">Study Session</option>
-
             <option value="Exam">Exam</option>
           </select>
 
-          <button type="submit" class="btn btn-primary">+ Add Event</button>
+          <button class="btn btn-primary" type="submit">+ Add Event</button>
         </form>
       </div>
 
+      <!-- My Events -->
+
       <div class="calendar-widget">
-        <div class="calendar-widget">
-          <h3>My Events</h3>
+        <h3>My Events</h3>
 
-          {% if events %}
-          <div class="calendar-widget">
-            {% if events %} {% for date, day_events in events.items() %} {% for
-            event in day_events %}
+        {% if events %} {% for date, day_events in events.items() %} {% for
+        event in day_events %}
 
-            <div class="calendar-event">
-              <span>{{ event.title }}</span>
+        <div class="calendar-event">
+          <div>
+            <strong>{{ event.title }}</strong><br />
 
-              <div>
-                <small>{{ date }}</small>
+            <small>{{ date }}</small>
+          </div>
 
-                <a href="/edit-event/{{ event.id }}" class="edit-event-btn">
-                  ✏️
-                </a>
+          <div>
+            {% if event.type != "Assignment" %}
 
-                <form
-                  action="/delete-event/{{ event.id }}"
-                  method="POST"
-                  style="display: inline"
-                >
-                  <button type="submit" class="delete-event-btn">🗑</button>
-                </form>
-              </div>
-            </div>
+            <a
+              href="{{ url_for('edit_event', event_id=event.id) }}"
+              class="edit-event-btn"
+              title="Edit"
+            >
+              ✏️
+            </a>
 
-            {% endfor %} {% endfor %} {% else %}
+            <form
+              action="{{ url_for('delete_event', event_id=event.id) }}"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit" class="delete-event-btn" title="Delete">
+                🗑️
+              </button>
+            </form>
 
-            <p>No events yet.</p>
+            {% else %}
+
+            <span title="Assignment"> 📝 </span>
 
             {% endif %}
           </div>
-          {% else %}
-
-          <p>No events yet.</p>
-
-          {% endif %}
         </div>
+
+        {% endfor %} {% endfor %} {% else %}
+
+        <p>No events available.</p>
+
+        {% endif %}
+      </div>
+
+      <!-- Statistics -->
+
+      <div class="calendar-widget">
         <h3>Statistics</h3>
 
         <div class="calendar-event">
-          <span>Events This Week</span>
-          <strong>5</strong>
-        </div>
+          <span>Total Event Days</span>
 
-        <div class="calendar-event">
-          <span>Pending Deadlines</span>
-          <strong>3</strong>
-        </div>
-
-        <div class="calendar-event">
-          <span>Next Exam</span>
-          <strong>12 Days</strong>
+          <strong>{{ events|length }}</strong>
         </div>
       </div>
     </div>
