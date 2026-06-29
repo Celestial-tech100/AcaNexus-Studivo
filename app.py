@@ -551,32 +551,33 @@ def logout():
 import calendar as cal
 from datetime import datetime
 
-@app.route("/calendar")
+
 @app.route("/calendar")
 def calendar():
 
     if "user_id" not in session:
         return redirect("/login")
 
-    month = request.args.get("month", type=int)
-    year = request.args.get("year", type=int)
-
+    # -----------------------------
+    # Current Date
+    # -----------------------------
     today = datetime.now()
+    today_date = today.strftime("%Y-%m-%d")
 
     today_day = today.day
     today_month = today.month
     today_year = today.year
 
-    if not month:
-        month = today.month
-
-    if not year:
-        year = today.year
+    # -----------------------------
+    # Selected Month / Year
+    # -----------------------------
+    month = request.args.get("month", type=int) or today.month
+    year = request.args.get("year", type=int) or today.year
 
     month_name = cal.month_name[month]
-
     calendar_days = cal.monthcalendar(year, month)
 
+    # Previous / Next Month Navigation
     prev_month = month - 1
     prev_year = year
 
@@ -594,22 +595,25 @@ def calendar():
     conn = sqlite3.connect("database/acanexus.db")
     cursor = conn.cursor()
 
-    # Calendar Events
+    # =====================================================
+    # EVENTS FOR CURRENT MONTH (Calendar Grid)
+    # =====================================================
+
     cursor.execute("""
-    SELECT id,
-           title,
-           event_type,
-           event_date
-    FROM calendar_events
-    WHERE user_id = ?
-      AND strftime('%m', event_date) = ?
-      AND strftime('%Y', event_date) = ?
-    ORDER BY event_date
-""", (
-    session["user_id"],
-    f"{month:02d}",
-    str(year)
-))
+        SELECT id,
+               title,
+               event_type,
+               event_date
+        FROM calendar_events
+        WHERE user_id = ?
+          AND strftime('%m', event_date) = ?
+          AND strftime('%Y', event_date) = ?
+        ORDER BY event_date
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
 
     rows = cursor.fetchall()
 
@@ -621,32 +625,36 @@ def calendar():
             events[event_date] = []
 
         events[event_date].append({
-        "id": event_id,
-        "title": title,
-        "type": event_type,
-        "source": "calendar"
-    })
+            "id": event_id,
+            "title": title,
+            "type": event_type,
+            "date": event_date,
+            "source": "calendar"
+        })
 
-    # Assignments
+    # =====================================================
+    # PENDING ASSIGNMENTS FOR CURRENT MONTH
+    # =====================================================
+
     cursor.execute("""
-    SELECT id,
-           title,
-           due_date,
-           status
-    FROM assignments
-    WHERE user_id = ?
-      AND status = 'Pending'
-      AND strftime('%m', due_date) = ?
-      AND strftime('%Y', due_date) = ?
-""", (
-    session["user_id"],
-    f"{month:02d}",
-    str(year)
-))
+        SELECT id,
+               title,
+               due_date
+        FROM assignments
+        WHERE user_id = ?
+          AND status = 'Pending'
+          AND strftime('%m', due_date) = ?
+          AND strftime('%Y', due_date) = ?
+        ORDER BY due_date
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
 
     assignment_rows = cursor.fetchall()
 
-    for assignment_id, title, due_date, status in assignment_rows:
+    for assignment_id, title, due_date in assignment_rows:
 
         if due_date not in events:
             events[due_date] = []
@@ -657,6 +665,127 @@ def calendar():
             "type": "Assignment",
             "source": "assignment"
         })
+
+    # =====================================================
+    # STATISTICS
+    # =====================================================
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM calendar_events
+        WHERE user_id=?
+          AND strftime('%m', event_date)=?
+          AND strftime('%Y', event_date)=?
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
+    events_this_month = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM calendar_events
+        WHERE user_id=?
+          AND event_type='Exam'
+          AND strftime('%m', event_date)=?
+          AND strftime('%Y', event_date)=?
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
+    exams_this_month = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM calendar_events
+        WHERE user_id=?
+          AND event_type='Study Session'
+          AND strftime('%m', event_date)=?
+          AND strftime('%Y', event_date)=?
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
+    study_sessions = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM assignments
+        WHERE user_id=?
+          AND status='Pending'
+          AND strftime('%m', due_date)=?
+          AND strftime('%Y', due_date)=?
+    """, (
+        session["user_id"],
+        f"{month:02d}",
+        str(year)
+    ))
+    pending_assignments = cursor.fetchone()[0]
+
+    # =====================================================
+    # UPCOMING EVENTS (Today Onwards)
+    # =====================================================
+
+    upcoming = []
+
+    cursor.execute("""
+        SELECT id,
+               title,
+               event_type,
+               event_date
+        FROM calendar_events
+        WHERE user_id=?
+          AND event_date>=?
+        ORDER BY event_date
+        LIMIT 5
+    """, (
+        session["user_id"],
+        today_date
+    ))
+
+    for event_id, title, event_type, event_date in cursor.fetchall():
+
+        upcoming.append({
+            "id": event_id,
+            "title": title,
+            "type": event_type,
+            "date": event_date,
+            "source": "calendar"
+        })
+
+    cursor.execute("""
+        SELECT id,
+               title,
+               due_date
+        FROM assignments
+        WHERE user_id=?
+          AND status='Pending'
+          AND due_date>=?
+        ORDER BY due_date
+        LIMIT 5
+    """, (
+        session["user_id"],
+        today_date
+    ))
+
+    for assignment_id, title, due_date in cursor.fetchall():
+
+        upcoming.append({
+            "id": assignment_id,
+            "title": title,
+            "type": "Assignment",
+            "date": due_date,
+            "source": "assignment"
+        })
+
+    # Sort everything together
+    upcoming.sort(key=lambda x: x["date"])
+
+    # Keep only the nearest 5
+    upcoming = upcoming[:5]
 
     conn.close()
 
@@ -673,9 +802,13 @@ def calendar():
         today_day=today_day,
         today_month=today_month,
         today_year=today_year,
-        events=events
+        events=events,
+        upcoming=upcoming,
+        events_this_month=events_this_month,
+        exams_this_month=exams_this_month,
+        study_sessions=study_sessions,
+        pending_assignments=pending_assignments
     )
-
 # ================= Add-Event  =================
 @app.route("/add-event", methods=["POST"])
 def add_event():

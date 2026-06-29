@@ -411,3 +411,6 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     cursor:pointer;
     transition:0.2s ease;
 }
+.calendar-widget .calendar-event-badge{
+    display:inline-block;
+}

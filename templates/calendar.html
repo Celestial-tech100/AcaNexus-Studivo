@@ -105,50 +105,26 @@
       <!-- My Events -->
 
       <div class="calendar-widget">
-        <h3>My Events</h3>
+        <h3>📅 Coming Up</h3>
 
-        {% if events %} {% for date, day_events in events.items() %} {% for
-        event in day_events %}
+        {% if upcoming %} {% for event in upcoming %}
 
         <div class="calendar-event">
           <div>
-            <strong>{{ event.title }}</strong><br />
+            <strong>
+              {% if event.type == "Exam" %} 🎓 {% elif event.type == "Study
+              Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% else %}
+              📌 {% endif %} {{ event.title }}
+            </strong>
 
-            <small>{{ date }}</small>
-          </div>
-
-          <div>
-            {% if event.type != "Assignment" %}
-
-            <a
-              href="{{ url_for('edit_event', event_id=event.id) }}"
-              class="edit-event-btn"
-              title="Edit"
-            >
-              ✏️
-            </a>
-
-            <form
-              action="{{ url_for('delete_event', event_id=event.id) }}"
-              method="POST"
-              style="display: inline"
-            >
-              <button type="submit" class="delete-event-btn" title="Delete">
-                🗑️
-              </button>
-            </form>
-
-            {% else %}
-
-            <span title="Assignment"> 📝 </span>
-
-            {% endif %}
+            <br />
+            <small>{{ event.date }}</small>
           </div>
         </div>
 
-        {% endfor %} {% endfor %} {% else %}
+        {% endfor %} {% else %}
 
-        <p>No events available.</p>
+        <p>No upcoming events.</p>
 
         {% endif %}
       </div>
@@ -156,12 +132,47 @@
       <!-- Statistics -->
 
       <div class="calendar-widget">
-        <h3>Statistics</h3>
+        <h3>📊 Statistics</h3>
 
         <div class="calendar-event">
-          <span>Total Event Days</span>
+          <span>📅 Events</span>
+          <strong>{{ events_this_month }}</strong>
+        </div>
 
-          <strong>{{ events|length }}</strong>
+        <div class="calendar-event">
+          <span>🎓 Exams</span>
+          <strong>{{ exams_this_month }}</strong>
+        </div>
+
+        <div class="calendar-event">
+          <span>📚 Study Sessions</span>
+          <strong>{{ study_sessions }}</strong>
+        </div>
+
+        <div class="calendar-event">
+          <span>📝 Pending Assignments</span>
+          <strong>{{ pending_assignments }}</strong>
+        </div>
+      </div>
+      <div class="calendar-widget">
+        <h3>🏷️ Legend</h3>
+
+        <div class="calendar-event">
+          <span class="calendar-event-badge assignment"> 📝 Assignment </span>
+        </div>
+
+        <div class="calendar-event">
+          <span class="calendar-event-badge exam"> 🎓 Exam </span>
+        </div>
+
+        <div class="calendar-event">
+          <span class="calendar-event-badge study-session">
+            📚 Study Session
+          </span>
+        </div>
+
+        <div class="calendar-event">
+          <span class="calendar-event-badge event"> 📌 Event </span>
         </div>
       </div>
     </div>
