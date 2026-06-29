@@ -621,10 +621,11 @@ def calendar():
             events[event_date] = []
 
         events[event_date].append({
-            "id": event_id,
-            "title": title,
-            "type": event_type
-        })
+        "id": event_id,
+        "title": title,
+        "type": event_type,
+        "source": "calendar"
+    })
 
     # Assignments
     cursor.execute("""
@@ -653,7 +654,8 @@ def calendar():
         events[due_date].append({
             "id": assignment_id,
             "title": title,
-            "type": "Assignment"
+            "type": "Assignment",
+            "source": "assignment"
         })
 
     conn.close()

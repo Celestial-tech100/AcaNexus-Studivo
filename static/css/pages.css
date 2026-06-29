@@ -401,3 +401,13 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 .edit-event-btn:hover{
     transform:scale(1.1);
 }
+.calendar-event-link{
+    text-decoration:none;
+    display:block;
+}
+
+.calendar-event-link:hover .calendar-event-badge{
+    transform:scale(1.03);
+    cursor:pointer;
+    transition:0.2s ease;
+}
