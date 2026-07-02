@@ -111,14 +111,29 @@
 
         <div class="calendar-event">
           <div>
-            <strong>
-              {% if event.type == "Exam" %} 🎓 {% elif event.type == "Study
-              Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% else %}
-              📌 {% endif %} {{ event.title }}
-            </strong>
+            {% if event.source == "calendar" %}
+
+            <a
+              href="{{ url_for('edit_event', event_id=event.id) }}"
+              class="calendar-event-link"
+            >
+              <strong>
+                {% if event.type == "Exam" %} 🎓 {% elif event.type == "Study
+                Session" %} 📚 {% elif event.type == "Assignment" %} 📝 {% else
+                %} 📌 {% endif %} {{ event.title }}
+              </strong>
+            </a>
+
+            {% else %}
+
+            <a href="{{ url_for('assignments') }}" class="calendar-event-link">
+              <strong>📝 {{ event.title }}</strong>
+            </a>
+
+            {% endif %}
 
             <br />
-            <small>{{ event.date }}</small>
+            <small>{{ event.display_date }}</small>
           </div>
         </div>
 

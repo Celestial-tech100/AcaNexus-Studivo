@@ -414,3 +414,8 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 .calendar-widget .calendar-event-badge{
     display:inline-block;
 }
+.calendar-event small{
+    color: var(--clr-text-secondary);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}

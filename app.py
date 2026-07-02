@@ -549,7 +549,7 @@ def logout():
 
 # ================= CALENDAR =================
 import calendar as cal
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 @app.route("/calendar")
@@ -563,6 +563,7 @@ def calendar():
     # -----------------------------
     today = datetime.now()
     today_date = today.strftime("%Y-%m-%d")
+    tomorrow_date = (today + timedelta(days=1)).strftime("%Y-%m-%d")
 
     today_day = today.day
     today_month = today.month
@@ -786,6 +787,18 @@ def calendar():
 
     # Keep only the nearest 5
     upcoming = upcoming[:5]
+    for item in upcoming:
+
+        event_date = datetime.strptime(item["date"], "%Y-%m-%d").date()
+
+        if item["date"] == today_date:
+            item["display_date"] = "Today"
+
+        elif item["date"] == tomorrow_date:
+            item["display_date"] = "Tomorrow"
+
+        else:
+            item["display_date"] = event_date.strftime("%d %b")
 
     conn.close()
 
