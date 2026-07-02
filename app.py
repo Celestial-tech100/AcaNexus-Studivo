@@ -554,7 +554,6 @@ from datetime import datetime, timedelta
 
 @app.route("/calendar")
 def calendar():
-
     if "user_id" not in session:
         return redirect("/login")
 

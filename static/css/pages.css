@@ -244,16 +244,19 @@
     background:var(--clr-surface);
     border:1px solid var(--clr-border);
     border-radius:14px;
-
     min-height:110px;
     padding:12px;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 
-    transition:all .3s ease;
 }
 
 .calendar-day:hover{
     transform:translateY(-4px);
     border-color:var(--clr-primary);
+    box-shadow:0 8px 18px rgba(0,0,0,.18);
 }
 
 .day-number{
@@ -332,13 +335,13 @@
     border-radius:8px;
 }
 .calendar-event-badge{
-    font-size:11px;
+    display:block;
     margin-top:4px;
     padding:3px 6px;
     border-radius:6px;
+    font-size:11px;
     background:rgba(212,175,55,0.15);
     color:#d4af37;
-
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -418,4 +421,81 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     color: var(--clr-text-secondary);
     font-size: 0.85rem;
     white-space: nowrap;
+}
+
+/*  Resopnsive calendar tablet (≤992px)   */ 
+@media (max-width:992px){
+
+    .calendar-grid{
+        gap:8px;
+    }
+
+    .calendar-day{
+        min-height:95px;
+        padding:8px;
+    }
+
+    .calendar-event-badge{
+        font-size:10px;
+        padding:2px 5px;
+    }
+
+}
+/*  Resopnsive calendar phone  (≤768px)  */ 
+@media (max-width:768px){
+
+    .calendar-toolbar{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    .calendar-grid{
+        gap:5px;
+    }
+
+    .calendar-day{
+        min-height:80px;
+        padding:6px;
+    }
+
+    .day-number{
+        font-size:13px;
+    }
+
+    .calendar-event-badge{
+        font-size:9px;
+        padding:2px 4px;
+    }
+}
+/*  Resopnsive calendar small phone  (≤480px)  */ 
+@media (max-width:480px){
+
+    .calendar-day{
+        min-height:70px;
+        padding:4px;
+    }
+
+    .calendar-day-name{
+        font-size:12px;
+        padding:8px 2px;
+    }
+
+    .calendar-event-badge{
+        font-size:8px;
+    }
+}
+.calendar-event-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.calendar-event-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+.calendar-event-link:hover{
+    color:var(--clr-primary);
 }
