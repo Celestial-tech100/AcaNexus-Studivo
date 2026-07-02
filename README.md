@@ -1,8 +1,10 @@
 # 🎓 AcaNexus : Studivo
 
 > A modern student productivity platform that helps students manage academics, assignments, notes, and expenses through a unified dashboard.
+> **A unified, full-stack student productivity ecosystem designed for modern academia.**
 
 ![Status](https://img.shields.io/badge/Status-Active%20Development-gold)
+[![Version](https://img.shields.io/badge/Version-v1.0-blue?style=flat-square)](#)
 ![Python](https://img.shields.io/badge/Python-3.x-blue)
 ![Flask](https://img.shields.io/badge/Flask-Backend-black)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-green)
@@ -14,13 +16,9 @@
 
 **AcaNexus : Studivo** is a full-stack student productivity and management platform built using Flask, SQLite, HTML, CSS, and JavaScript.
 
-The goal of the project is to provide students with a centralized system where they can manage:
+The modern student juggles multiple platforms for managing assignments, tracking deadlines, organizing study sessions, and keeping personal notes. This fragmentation creates unnecessary friction and cognitive load.
 
-- Academic notes
-- Assignments and deadlines
-- Personal expenses
-- Productivity tracking
-- Student life organization
+**AcaNexus : Studivo** is a centralized academic workspace built to solve this problem. Developed with Python and Flask, it brings essential student tools into a single, cohesive dashboard. Wrapped in a premium "Dark Academic" aesthetic with modern gold accents, AcaNexus is designed to be more than just a task manager—it is a comprehensive ecosystem aimed at optimizing student productivity and academic success.
 
 Instead of relying on multiple applications, students can access everything through a single modern dashboard.
 
@@ -30,15 +28,40 @@ This project is being developed as both a practical productivity solution and a 
 
 ## ✨ Current Features
 
+## ✨ Key Features
+
+### 🔐 Authentication & Security
+
+- **Secure Access:** Robust user registration, secure login, and session management.
+- **Data Privacy:** Strict user-specific data isolation ensuring your academic data remains private.
+- **Account Management:** Seamless password changes and secure logout functionality.
+
 ### 📊 Smart Dashboard
 
-- Beautiful modern dashboard
-- Academic productivity overview
-- Notes statistics
-- Assignment tracking summary
-- Expense insights
-- Responsive card layout
-- Animated UI components
+- **Personalized Experience:** Dynamic greetings based on time of day and user profile.
+- **Academic Overview:** Quick-glance statistics cards for active assignments and tasks.
+- **Widgets:** Built-in "Upcoming Deadlines" widget to keep you ahead of your schedule.
+- **Responsive Layout:** A fluid, mobile-friendly design that adapts to any screen size.
+
+### 📝 Assignment Management
+
+- **Full Control:** Secure CRUD (Create, Read, Update, Delete) operations for all tasks.
+- **Tracking:** Toggle between Pending and Completed statuses with intuitive visual indicators.
+- **Filtering & Search:** Easily search through past assignments and filter by current status.
+- **Deadline Management:** Date-aware tracking that automatically highlights pressing due dates.
+
+### 📅 Calendar & Study Planner
+
+- **Interactive Navigation:** Monthly calendar view with current-day highlighting.
+- **Event Management:** Add, edit, and delete academic events or study sessions.
+- **Seamless Integration:** Only pending assignments are dynamically displayed on your calendar.
+- **Planner Widget:** A quick-look upcoming events widget with dynamic statistics and visual legends.
+
+### 👤 Profile & Settings
+
+- **Identity:** Manage your personal and academic information from a dedicated profile page.
+- **Customization:** Theme settings foundation laying the groundwork for personalized aesthetics.
+- **Security Hub:** Dedicated account settings and security management section.
 
 ### 📝 Notes Manager
 
@@ -48,15 +71,6 @@ This project is being developed as both a practical productivity solution and a 
 - Search notes instantly
 - Organized note cards
 - Clean modern interface
-
-### 📅 Assignment Tracker
-
-- Add assignments
-- Manage due dates
-- Mark assignments as completed
-- Automatic overdue detection
-- Pending and completed tracking
-- Responsive assignment cards
 
 ### 💰 Expense Manager
 
@@ -175,26 +189,57 @@ The MVP (Minimum Viable Product) includes:
 
 ## 🛠️ Tech Stack
 
-### Frontend
+| Category            | Technologies                                   |
+| :------------------ | :--------------------------------------------- |
+| **Frontend**        | HTML5, CSS3, JavaScript, Jinja2 Templating     |
+| **Backend**         | Python 3, Flask Framework                      |
+| **Database**        | SQLite (Relational Database)                   |
+| **Design System**   | Custom CSS (Dark Academic × Modern Tech theme) |
+| **Version Control** | Git, GitHub ,VS Code (Tools)                   |
 
-- HTML5
-- CSS3
-- JavaScript
+---
 
-### Backend
+## 🚀 Installation Guide
 
-- Python
-- Flask
+Want to run AcaNexus locally? Follow these steps to set up your development environment.
 
-### Database
+**1. Clone the repository**
 
-- SQLite
+```bash
+git clone [https://github.com/Celestial-tech100/AcaNexus-Studivo.git](https://github.com/Celestial-tech100/AcaNexus-Studivo.git)
+cd AcaNexus-Studivo
 
-### Tools
+```
 
-- Git
-- GitHub
-- VS Code
+**2. Create a virtual environment**
+
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+```
+
+**3. Install dependencies**
+
+```bash
+pip install -r requirements.txt
+
+```
+
+**4. Initialize the Database and Run the Application**
+
+```bash
+python reset_db.py  # Optional: Only if you need a fresh database schema
+python app.py
+
+```
+
+_The application will be available at `http://127.0.0.1:5000`._
 
 ---
 
@@ -203,49 +248,75 @@ The MVP (Minimum Viable Product) includes:
 ```text
 AcaNexus-Studivo/
 │
-├── app.py
-├── requirements.txt
-├── README.md
-│
+├── .vscode/
+│   └── settings.json
 ├── database/
-│   └── acanexus.db
+│   ├── acanexus.db
+│   └── schema.sql
+├── docs/
+│   └── project-architecture.md
 │
 ├── static/
 │   ├── css/
 │   │   ├── style.css
-│   │   ├── base.css
-|   |   ├── auth.css
-|   |   ├── dashboard.css
-│   │   ├── layout.css
-|   |   ├── pages.css
-│   │   ├── components.css
-│   │   ├── landing.css
-│   │   ├── assignments.css
+│   │   ├── auth.css
 │   │   ├── notes.css
+│   │   ├── landing.css
 │   │   ├── expenses.css
+│   │   ├── attendance.css
+│   │   ├── animations.css
+│   │   ├── base.css
+│   │   ├── components.css
+│   │   ├── dashboard.css
+│   │   ├── layout.css
+│   │   ├── pages.css
+│   │   └── style.css
+│   │   ├── assignments.css
+│   │   ├── settings.css
 │   │
 │   ├── js/
 │   │   └── script.js
 |       └── assignments.js
 │
 ├── templates/
-│   ├── index.html
 │   ├── base.html
+│   ├── index.html
 │   ├── dashboard.html
-│   ├── notes.html
-│   ├── edit_note.html
-│   ├── assignments.html
-│   ├── expenses.html
 │   ├── login.html
-│   └── register.html
+│   ├── register.html
+│   ├── attendance.html
+│   ├── assignments.html
+│   ├── calendar.html
+│   ├── notes.html
+│   ├── expenses.html
+│   ├── edit_note.html
+│   ├── edit_event.html
+│   ├── profile.html
+│   └── settings.html
 │
 └── screenshots/
-    ├── Homepage.png
-    ├── Dashboard.png
-    ├── Notes.png
-    ├── Assignment.png
-    └── Expenses.png
+|   ├── Homepage.png
+|   ├── Dashboard.png
+|   ├── Notes.png
+|   ├── Assignment.png
+|   └── Expenses.png
+├── .gitignore
+├── app.py
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── reset_db.py
+
 ```
+
+## 🛡️ Security Highlights
+
+AcaNexus is built with foundational security principles in mind:
+
+- **Session Authentication:** Secure server-side sessions manage user states safely.
+- **Data Isolation:** All database queries are strictly scoped to the logged-in user's ID, ensuring total data privacy.
+- **Secure Routing:** Protected endpoints prevent unauthorized access to internal dashboards and API routes via custom decorators.
+- **Password Security:** (Implementation of secure password hashing for user accounts).
 
 ---
 
@@ -266,43 +337,77 @@ This project is helping strengthen skills in:
 
 ---
 
+## 🎯 Feature Status & Roadmap
+
+### Current Implementation Status
+
+| Module                    | Status      |
+| ------------------------- | ----------- |
+| **Authentication System** | ✅ Complete |
+| **Smart Dashboard**       | ✅ Complete |
+| **Assignment Tracking**   | ✅ Complete |
+| **Calendar & Planner**    | ✅ Complete |
+| **User Profile**          | ✅ Complete |
+| **Application Settings**  | ✅ Complete |
+| Notes & Document Manager  | 🚧 Planned  |
+| Academic Study Planner    | 🚧 Planned  |
+| Digital Library           | 🚧 Planned  |
+
 ## 📈 Development Roadmap
 
-### ✅ Phase 1
+**Phase 1: Academic Hub (Next Steps)**
 
-- Project Setup
-- Database Setup
-- Notes Module
-- Dashboard Foundation
+- Study Sessions & Pomodoro Timer integration.
+- Rich-text Notes management and Attendance Tracker.
+- Semester Tracker and automated GPA Calculator.
 
-### ✅ Phase 2
+**Phase 2: Digital Ecosystem**
 
-- Assignment Tracker
-- Expense Manager
-- UI Improvements
-- Responsive Layouts
+- Digital Library with eBook reading capabilities.
+- Subscription and Author Permission systems.
+- Productivity analytics, Daily Goals, and Habit tracking.
 
-### 🚧 Phase 3 (Current)
+**Phase 3: AI & Community**
 
-- Authentication System
-- Landing Page Integration
-- Enhanced Dashboard Analytics
-- Improved User Experience
+- AI Study Assistant and automated Note Summaries.
+- Student Groups, Discussion Forums, and Shared Notes.
 
-### 🔜 Phase 4
+**Phase 4: Technical Scaling**
 
-- Cloud Deployment
-- PostgreSQL Migration
-- Advanced Productivity Features
-- AI Assistance
+- Migration to PostgreSQL and Cloud Deployment.
+- Docker containerization and CI/CD pipelines.
+- Building out a dedicated REST API for future mobile integration.
 
 ---
 
-## 🤝 Contributions
+## 💡 Learning Outcomes
+
+Developing this platform provided hands-on experience in several core software engineering disciplines:
+
+- Architecting scalable **Full-Stack Applications** using Python and Flask.
+- Designing normalized **Relational Databases** and writing efficient SQL queries.
+- Implementing **State and Session Management** for secure user authentication.
+- Crafting a cohesive **UI/UX Design System** using reusable components and modern CSS techniques.
+- Applying robust **Software Engineering Practices** including modular code structuring and version control.
+
+---
+
+## 🔭 Future Vision
+
+The ultimate goal for **AcaNexus : Studivo** is to transcend the standard "To-Do List" architecture. The vision is to build an intelligent, predictive student ecosystem. By eventually integrating AI planners and community-driven knowledge sharing, AcaNexus aims to become the definitive operating system for a student's academic life.
+
+---
+
+## 🤝 Support & Contributions
 
 This project is currently being developed as a personal learning and portfolio project.
 
 Suggestions, feedback, and ideas are always welcome.
+If you find this project interesting or helpful:
+
+- ⭐ **Star the repository** to show your support!
+- 🐛 **Open an issue** if you find a bug or have a feature request.
+- 📬 **Share feedback**—constructive criticism is always welcome as this portfolio project continues to grow.
 
 ---
 
@@ -315,16 +420,6 @@ B.Tech Computer Science Engineering Student
 GitHub:
 
 https://github.com/Celestial-tech100
-
----
-
-## ⭐ Support
-
-If you like this project:
-
-- Star the repository
-- Follow the project updates
-- Share feedback and suggestions
 
 ---
 
